@@ -1,0 +1,25 @@
+.welcome__container {
+  @include media(phone) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 3em;
+  }
+  @include media(sm-tablet) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3em;
+  }
+  @include media(lg-tablet) {
+    display: flex;
+    flex-direction: row;
+    margin: 3em 3em 0 3em;
+  }
+  @include media(desktop) {
+    display: flex;
+    flex-direction: row;
+    margin: 3em 3em 0 3em;
+  }
+}

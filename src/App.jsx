@@ -1,9 +1,16 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import Homepage from './pages/Homepage';
+
+import './styles/App.scss';
 
 function App() {
   return (
     <>
-      <h1>Hello there :)</h1>
+      <Router>
+        <Route exact path="/" component={Homepage} />
+      </Router>
     </>
   );
 }
