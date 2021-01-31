@@ -1,25 +1,86 @@
 .welcome__container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border: 1px solid red;
   @include media(phone) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 3em;
+    flex-direction: row;
+    justify-content: center;
+    // align-items: center;
   }
   @include media(sm-tablet) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 3em;
   }
   @include media(lg-tablet) {
     display: flex;
     flex-direction: row;
-    margin: 3em 3em 0 3em;
   }
   @include media(desktop) {
-    display: flex;
     flex-direction: row;
-    margin: 3em 3em 0 3em;
+  }
+
+  &-leftpanel {
+    padding: 7em 5em 5em 5em;
+    border: 1px solid brown;
+    @include media(phone) {
+      height: 100%;
+    }
+    @include media(desktop) {
+      min-width: 50%;
+      height: 100vh;
+    }
+    &-tophalf {
+      // border: 1px solid green;
+      @include media(desktop) {
+        height: 45%;
+      }
+
+      &-icon {
+        font-size: 2em;
+      }
+    }
+
+    &-bottomhalf {
+      @include media(desktop) {
+        margin: 0 5em;
+        height: 55%;
+        width: 30em;
+      }
+
+      & > p {
+        line-height: 2em;
+        font-size: 1.2em;
+      }
+
+      &-buttons {
+        & > button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &-rightpanel {
+    @include media(phone) {
+      display: none;
+    }
+    @include media(sm-tablet) {
+      display: none;
+    }
+    @include media(lg-tablet) {
+      display: none;
+    }
+    @include media(desktop) {
+      display: flex;
+      border: 1px solid purple;
+      width: 50%;
+      height: 100vh;
+      background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/e92590100587783.5f0c5ecca4971.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
   }
 }
