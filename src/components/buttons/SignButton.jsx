@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-const SignButton = ({ children }) => {
+const SignButton = ({ children, value }) => {
   return (
     // <button type="submit" className={`signbutton__${children}`}>
-    <button type="submit" id="signbutton" className={`signbutton__${children}`}>
-      {children}
-    </button>
+    <a href={`/${value}`} className="signbutton__link">
+      <button type="button" className="signbutton" id={`${value}`}>
+        {children}
+      </button>
+    </a>
   );
 };
 

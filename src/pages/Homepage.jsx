@@ -22,11 +22,11 @@ const Homepage = () => {
             <br />
             Create and organise your tasks in a few seconds, easy as pie.
             <br />
-            Sign up for a free account
+            Sign up for an account, it is completely free !
           </p>
           <span className="welcome__container-leftpanel-bottomhalf-buttons">
-            <SignButton>signin</SignButton>
-            <SignButton>signup</SignButton>
+            <SignButton value="signin">sign in</SignButton>
+            <SignButton value="signup">sign up</SignButton>
           </span>
         </div>
       </div>
