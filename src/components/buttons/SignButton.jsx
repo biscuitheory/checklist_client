@@ -5,7 +5,7 @@ const SignButton = ({ children, value }) => {
   return (
     // <button type="submit" className={`signbutton__${children}`}>
     <a href={`/${value}`} className="signbutton__link">
-      <button type="button" className="signbutton" id={`${value}`}>
+      <button type="submit" className="signbutton" id={`${value}`}>
         {children}
       </button>
     </a>

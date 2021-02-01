@@ -1,20 +1,13 @@
 import React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClipboard } from '@fortawesome/free-regular-svg-icons';
-
+import WelcomeTopIcon from '../components/layout/WelcomeTopIcon';
 import SignButton from '../components/buttons/SignButton';
 
 const Homepage = () => {
   return (
     <div className="welcome__container">
       <div className="welcome__container-leftpanel">
-        <div className="welcome__container-leftpanel-tophalf">
-          <FontAwesomeIcon
-            className="welcome__container-leftpanel-tophalf-icon"
-            icon={faClipboard}
-          />
-        </div>
+        <WelcomeTopIcon />
         <div className="welcome__container-leftpanel-bottomhalf">
           <h1>Todolist</h1>
           <p>
@@ -25,8 +18,8 @@ const Homepage = () => {
             Sign up for an account, it is completely free !
           </p>
           <span className="welcome__container-leftpanel-bottomhalf-buttons">
-            <SignButton value="signin">sign in</SignButton>
-            <SignButton value="signup">sign up</SignButton>
+            <SignButton value="signin">Sign in</SignButton>
+            <SignButton value="signup">Sign up</SignButton>
           </span>
         </div>
       </div>

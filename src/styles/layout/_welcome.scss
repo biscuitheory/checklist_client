@@ -44,6 +44,7 @@
     }
     @include media(desktop) {
       padding: 7em 5em 5em 5em;
+      align-items: flex-start;
       min-width: 50%;
       height: 100vh;
     }
@@ -60,7 +61,7 @@
     &-bottomhalf {
       @include media(desktop) {
         margin: 0 5em;
-        height: 55%;
+        // height: 55%;
         width: 28em;
       }
 
