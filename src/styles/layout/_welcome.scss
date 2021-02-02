@@ -19,7 +19,7 @@
   }
 
   &-leftpanel {
-    padding: 3em;
+    padding: 3em 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -59,9 +59,15 @@
     }
 
     &-bottomhalf {
+      width: 95%;
+      @include media(sm-tablet) {
+        width: 28em;
+      }
+      @include media(lg-tablet) {
+        width: 28em;
+      }
       @include media(desktop) {
         margin: 0 5em;
-        // height: 55%;
         width: 28em;
       }
 

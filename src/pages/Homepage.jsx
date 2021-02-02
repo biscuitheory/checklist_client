@@ -18,8 +18,12 @@ const Homepage = () => {
             Sign up for an account, it is completely free !
           </p>
           <span className="welcome__container-leftpanel-bottomhalf-buttons">
-            <SignButton value="signin">Sign in</SignButton>
-            <SignButton value="signup">Sign up</SignButton>
+            <a href="/signin" className="signbutton__link">
+              <SignButton value="signin">Sign in</SignButton>
+            </a>
+            <a href="/signup" className="signbutton__link">
+              <SignButton value="signup">Sign up</SignButton>
+            </a>
           </span>
         </div>
       </div>

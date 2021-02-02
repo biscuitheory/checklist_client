@@ -20,8 +20,17 @@
     margin: 0.5em 0;
     &-line {
       margin: 0 1em;
-      width: 12em;
+      width: 5em;
       border: 1px solid $color--brinput;
+      @include media(sm-tablet) {
+        width: 12em;
+      }
+      @include media(lg-tablet) {
+        width: 12em;
+      }
+      @include media(desktop) {
+        width: 12em;
+      }
     }
     &-word {
       color: $color--brinput;

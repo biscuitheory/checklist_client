@@ -1,12 +1,23 @@
 .form {
-
   &__container {
-    border: 1px solid red;
+    margin: 1em 0;
 
     &-title {
       margin: 0 0 0.5em 0;
+      font-size: 1.5em;
+      @include media(sm-tablet) {
+        font-size: 1.8em;
+      }
+      @include media(lg-tablet) {
+        font-size: 1.8em;
+      }
+      @include media(desktop) {
+        font-size: 1.8em;
+      }
     }
 
-
+    &-label {
+      font-size: 1em;
+    }
   }
 }

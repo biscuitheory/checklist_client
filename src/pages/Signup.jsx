@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import WelcomeTopIcon from '../components/layout/WelcomeTopIcon';
@@ -13,6 +14,7 @@ const API = process.env.REACT_APP_DEV_API_URL;
 
 const Signup = () => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
+  const [redirect, setRedirect] = useState(false);
 
   const initialState = {
     firstname: '',
@@ -38,6 +40,7 @@ const Signup = () => {
 
       if (res.status === 201) {
         console.log('signup success', res);
+        setRedirect(true);
       }
     } catch (err) {
       console.log('error from signup', err);
@@ -48,6 +51,9 @@ const Signup = () => {
     }
   }
 
+  if (redirect) {
+    return <Redirect to="/signin" />;
+  }
   return (
     <div className="welcome__container">
       <div className="welcome__container-leftpanel">
@@ -121,9 +127,15 @@ const Signup = () => {
               {errors.password && <p className="error">{errors.password}</p>}
             </label>
             <span className="welcome__container-leftpanel-bottomhalf-buttons">
-              <SignButton value="signup">Sign up</SignButton>
+              <SignButton type="submit" value="signup">
+                Sign up
+              </SignButton>
               <SignButtonDivider />
-              <SignButton value="signin">Sign in</SignButton>
+              {/* <a href="/signin" className="signbutton__link"> */}
+              <SignButton type="button" value="signin">
+                Sign in
+              </SignButton>
+              {/* </a> */}
             </span>
           </form>
         </div>
