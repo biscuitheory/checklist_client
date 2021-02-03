@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-import WelcomeTopIcon from '../components/layout/WelcomeTopIcon';
-import SignButton from '../components/buttons/SignButton';
-import SignButtonDivider from '../components/buttons/SignButtonDivider';
-
 import usePasswordToggle from '../components/customedhooks/usePasswordToggle';
 import useForm from '../components/customedhooks/useForm';
 import validate from '../components/validators/validateSignup';
+import WelcomeTopIcon from '../components/layout/WelcomeTopIcon';
+import SignButton from '../components/buttons/SignButton';
+import SignButtonDivider from '../components/buttons/SignButtonDivider';
 
 const API = process.env.REACT_APP_DEV_API_URL;
 

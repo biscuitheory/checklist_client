@@ -3,7 +3,7 @@ import React from 'react';
 const Board = () => {
   return (
     <>
-      <h1>Wesh les poulettes c le board</h1>
+      <h1>This is the Board !</h1>
     </>
   );
 };

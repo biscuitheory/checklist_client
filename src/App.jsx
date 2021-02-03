@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { loaduser } from './actions/index';
 
 import Homepage from './pages/Homepage';
 import Signup from './pages/Signup';
@@ -8,22 +11,34 @@ import Board from './pages/Board';
 
 import './styles/App.scss';
 
+const API = process.env.REACT_APP_DEV_API_URL;
+
 function App() {
+  const dispatch = useDispatch();
+
+  const fetchUser = async () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const user = await axios.get(`${API}user/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(loaduser(user));
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
-    <>
-      <Router>
-        <Route exact path="/" component={Homepage} />
-      </Router>
-      <Router>
-        <Route exact path="/signup" component={Signup} />
-      </Router>
-      <Router>
-        <Route exact path="/signin" component={Signin} />
-      </Router>
-      <Router>
-        <Route path="/board" component={Board} />
-      </Router>
-    </>
+    <Router>
+      <Route exact path="/" component={Homepage} />
+      <Route exact path="/signup" component={Signup} />
+      <Route exact path="/signin" component={Signin} />
+      <Route path="/board" component={Board} />
+    </Router>
   );
 }
 
