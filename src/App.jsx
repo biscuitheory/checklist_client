@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { loaduser } from './actions/index';
@@ -8,6 +8,8 @@ import Homepage from './pages/Homepage';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import Board from './pages/Board';
+// import PublicRoute from './components/common/PublicRoute';
+// import PrivateRoute from './components/common/PrivateRoute';
 
 import './styles/App.scss';
 
@@ -34,10 +36,12 @@ function App() {
 
   return (
     <Router>
-      <Route exact path="/" component={Homepage} />
-      <Route exact path="/signup" component={Signup} />
-      <Route exact path="/signin" component={Signin} />
-      <Route path="/board" component={Board} />
+      <Switch>
+        <Route exact path="/" component={Homepage} />
+        <Route exact path="/signup" component={Signup} />
+        <Route exact path="/signin" component={Signin} />
+        <Route path="/board" component={Board} />
+      </Switch>
     </Router>
   );
 }

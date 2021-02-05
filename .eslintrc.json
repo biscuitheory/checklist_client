@@ -5,6 +5,8 @@
       "prettier/prettier": "error",
       "no-unused-vars": "warn",
       "no-console": "off",
-      "func-names": "off"
+      "func-names": "off",
+      "react/prop-types": "off",
+      "react/jsx-props-no-spreading": "off"
     }
 }
