@@ -7,7 +7,7 @@ import { loaduser } from './actions/index';
 import Homepage from './pages/Homepage';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
-import Board from './pages/Board';
+import Dashboard from './pages/Dashboard';
 // import PublicRoute from './components/common/PublicRoute';
 // import PrivateRoute from './components/common/PrivateRoute';
 
@@ -40,7 +40,7 @@ function App() {
         <Route exact path="/" component={Homepage} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/signin" component={Signin} />
-        <Route path="/board" component={Board} />
+        <Route path="/board" component={Dashboard} />
       </Switch>
     </Router>
   );

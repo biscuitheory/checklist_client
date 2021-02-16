@@ -1,0 +1,19 @@
+.navbar__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1em;
+
+  &-board {
+    display: flex;
+    flex-direction: row;
+
+    & h2 {
+      display: none;
+      @include media(desktop) {
+        display: flex;
+        font-size: 1em;
+      }
+    }
+  }
+}
