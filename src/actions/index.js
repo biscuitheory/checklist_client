@@ -1,22 +1,22 @@
-export const signin = (res) => {
-  return {
-    type: 'SIGNIN',
-    payload: res,
-  };
-};
-export const signout = (res) => {
-  return {
-    type: 'SIGNOUT',
-    payload: res,
-  };
-};
-export const loaduser = (user) => {
-  return {
-    type: 'LOAD_USER',
-    payload: user,
-  };
-};
+// export const signin = (res) => {
+//   return {
+//     type: 'SIGNIN',
+//     payload: res,
+//   };
+// };
+// export const signout = (res) => {
+//   return {
+//     type: 'SIGNOUT',
+//     payload: res,
+//   };
+// };
+// export const loaduser = (user) => {
+//   return {
+//     type: 'LOAD_USER',
+//     payload: user,
+//   };
+// };
 
-const AllActions = { signin, signout, loaduser };
+// const AllActions = { signin, signout, loaduser };
 
-export default AllActions;
+// export default AllActions;

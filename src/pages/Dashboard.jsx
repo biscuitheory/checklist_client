@@ -1,17 +1,23 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH, faPenNib } from '@fortawesome/free-solid-svg-icons';
 
 import Navbar from '../components/layout/Navbar';
 import AddItemButton from '../components/buttons/AddItemButton';
 
-const Dashboard = () => {
+const Dashboard = ({ auth }) => {
+  console.log('yehehe', auth);
   return (
     <>
       <Navbar />
       <div className="dashboard__container">
-        <h2>User&apos;s Board</h2>
+        <h2>
+          {auth.user.lastname}
+          &apos;s Board
+        </h2>
         <div className="dashboard__container-lists">
           <div className="dashboard__container-lists-list">
             <div className="dashboard__container-lists-list-header">
@@ -36,4 +42,8 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Dashboard);

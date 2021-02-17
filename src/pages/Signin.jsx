@@ -1,8 +1,13 @@
+/* eslint-disable no-shadow */
+
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+// import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { signin } from '../actions/index';
+import store from '../store';
+import { signin } from '../actions/auth';
 
 import usePasswordToggle from '../components/customedhooks/usePasswordToggle';
 import useForm from '../components/customedhooks/useForm';
@@ -11,12 +16,13 @@ import validate from '../components/validators/validateSignin';
 import WelcomeTopIcon from '../components/layout/WelcomeTopIcon';
 import SignButton from '../components/buttons/SignButton';
 import SignButtonDivider from '../components/buttons/SignButtonDivider';
+import auth from '../reducers/auth';
 
-const API = process.env.REACT_APP_DEV_API_URL;
+// const API = process.env.REACT_APP_DEV_API_URL;
 
-const Signin = () => {
+const Signin = ({ signin, auth: { isAuthenticated } }) => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [redirect, setRedirect] = useState(false);
 
   const initialState = {
@@ -30,29 +36,33 @@ const Signin = () => {
     submit
   );
 
-  async function submit() {
-    try {
-      const res = await axios.post(`${API}signin`, {
-        email: values.email,
-        password: values.password,
-      });
+  console.log('ebisu', isAuthenticated);
 
-      if (res.status === 200) {
-        dispatch(signin(res));
-        console.log('it is a success', res);
-        setRedirect(true);
-      }
-    } catch (err) {
-      console.log('error from signup', err);
-      setValues({
-        ...values,
-        errorMessage: err.message,
-      });
-    }
+  console.log('hehe', values);
+  async function submit() {
+    signin(values);
+    // try {
+    //   const res = await axios.post(`${API}signin`, {
+    //     email: values.email,
+    //     password: values.password,
+    //   });
+    //   if (res.status === 200) {
+    //     dispatch(signin(res));
+    //     signin(res);
+    //     console.log('it is a success', res);
+    //     setRedirect(true);
+    //   }
+    // } catch (err) {
+    //   console.log('error from signup', err);
+    //   setValues({
+    //     ...values,
+    //     errorMessage: err.message,
+    //   });
+    // }
   }
 
-  if (redirect) {
-    return <Redirect to="/board" />;
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
   }
   return (
     <div className="welcome__container">
@@ -113,4 +123,14 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+// Signin.propTypes = {
+//   signin: PropTypes.func.isRequired,
+//   isAuthenticated: PropTypes.bool,
+// };
+
+const mapStateToProps = (state) => ({
+  // isAuthenticated: state.auth.isAuthenticated,
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { signin })(Signin);

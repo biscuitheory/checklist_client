@@ -4,14 +4,23 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
 
-const PrivateRoute = ({ component: Component, auth, ...rest }) => {
-  if (auth.isAuthenticated === true) {
-    return <Route {...rest} render={(props) => <Component {...props} />} />;
-  }
-  return <Redirect to="/signin" />;
-};
+const PrivateRoute = ({ component: Component, auth, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) => {
+      if (auth.isLoading) {
+        return <h2>Loading...</h2>;
+      }
+      if (!auth.isAuthenticated) {
+        console.log('wesh la mifa', auth);
+        return <Redirect to="/" />;
+      }
+      console.log('tatayoyo', auth);
+      return <Component {...props} />;
+    }}
+  />
+);
 
 const mapStateToProps = (state) => ({
   auth: state.auth,

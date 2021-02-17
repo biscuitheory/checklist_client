@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
-import AuthReducer from './auth';
+import auth from './auth';
+import errors from './errors';
+import messages from './messages';
 
 const AllReducers = combineReducers({
-  AuthReducer,
+  auth,
+  errors,
+  messages,
 });
 
 export default AllReducers;
