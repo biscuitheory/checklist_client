@@ -1,15 +1,23 @@
-import React from 'react';
+/* eslint-disable no-shadow */
+import React, { useState, useEffect } from 'react';
 
 import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH, faPenNib } from '@fortawesome/free-solid-svg-icons';
+import { getLists } from '../actions/lists';
 
 import Navbar from '../components/layout/Navbar';
 import AddItemButton from '../components/buttons/AddItemButton';
 
-const Dashboard = ({ auth }) => {
+const Dashboard = ({ getLists, auth, lists, list }) => {
   console.log('authenticated user', auth);
+  console.log('lists', list);
+
+  useEffect(() => {
+    getLists();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -44,6 +52,8 @@ const Dashboard = ({ auth }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  lists: state.lists.lists,
+  list: state.lists.list,
 });
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, { getLists })(Dashboard);

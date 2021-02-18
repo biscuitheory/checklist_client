@@ -13,6 +13,7 @@ import {
   USER_LOADING,
   USER_LOADED,
   AUTH_ERROR,
+  CLEAR_LISTS,
 } from './types';
 
 const API = process.env.REACT_APP_DEV_API_URL;
@@ -22,32 +23,12 @@ export const loadUser = () => async (dispatch, getState) => {
   // User loading
   dispatch({ type: USER_LOADING });
 
-  // Get token from state
-  const { token } = getState().auth;
-  // console.log('youpi', getState());
-  // Headers
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  // If token, add to headers config
-  if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`;
-  }
-
   axios
-    .get(`${API}auth/user`, config)
+    .get(`${API}auth/user`, tokenConfig(getState))
     .then((res) => {
       dispatch({ type: USER_LOADED, payload: res.data });
     })
     .catch((err) => {
-      // const errors = { msg: err.response.data, status: err.response.status };
-      // dispatch({
-      //   type: GET_ERRORS,
-      //   payload: errors,
-      // });
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({ type: AUTH_ERROR });
     });
@@ -104,7 +85,23 @@ export const signin = (userData) => async (dispatch) => {
 };
 
 //  SIGNOUT USER
-export const signout = (email, password) => async (dispatch) => {
+export const signout = () => async (dispatch, getState) => {
+  axios
+    .post(`${API}signout`, null, tokenConfig(getState))
+    .then((res) => {
+      dispatch({ type: CLEAR_LISTS });
+      dispatch({ type: SIGNOUT_SUCCESS });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
+
+// TOKEN CONFIG - HELPER FUNCTION
+export const tokenConfig = (getState) => {
+  // Get token from state
+  const { token } = getState().auth;
+  console.log('por todas', token);
   // Headers
   const config = {
     headers: {
@@ -112,17 +109,9 @@ export const signout = (email, password) => async (dispatch) => {
     },
   };
 
-  // Request Body
-  const body = JSON.stringify({ email, password });
-  console.log('katchi', body);
-
-  axios
-    .post(`${API}signin`, body, config)
-    .then((res) => {
-      dispatch({ type: SIGNOUT_SUCCESS, payload: res.data });
-    })
-    .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: AUTH_FAIL });
-    });
+  // If token, add to headers config
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+  return config;
 };
