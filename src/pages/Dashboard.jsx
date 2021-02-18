@@ -9,7 +9,7 @@ import Navbar from '../components/layout/Navbar';
 import AddItemButton from '../components/buttons/AddItemButton';
 
 const Dashboard = ({ auth }) => {
-  console.log('yehehe', auth);
+  console.log('authenticated user', auth);
   return (
     <>
       <Navbar />

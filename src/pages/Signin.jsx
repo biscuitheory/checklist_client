@@ -1,12 +1,7 @@
 /* eslint-disable no-shadow */
-
-import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-// import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import store from '../store';
 import { signin } from '../actions/auth';
 
 import usePasswordToggle from '../components/customedhooks/usePasswordToggle';
@@ -16,14 +11,9 @@ import validate from '../components/validators/validateSignin';
 import WelcomeTopIcon from '../components/layout/WelcomeTopIcon';
 import SignButton from '../components/buttons/SignButton';
 import SignButtonDivider from '../components/buttons/SignButtonDivider';
-import auth from '../reducers/auth';
-
-// const API = process.env.REACT_APP_DEV_API_URL;
 
 const Signin = ({ signin, auth: { isAuthenticated } }) => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-  // const dispatch = useDispatch();
-  const [redirect, setRedirect] = useState(false);
 
   const initialState = {
     email: '',
@@ -36,29 +26,10 @@ const Signin = ({ signin, auth: { isAuthenticated } }) => {
     submit
   );
 
-  console.log('ebisu', isAuthenticated);
+  console.log('authenticated or not?', isAuthenticated);
 
-  console.log('hehe', values);
   async function submit() {
     signin(values);
-    // try {
-    //   const res = await axios.post(`${API}signin`, {
-    //     email: values.email,
-    //     password: values.password,
-    //   });
-    //   if (res.status === 200) {
-    //     dispatch(signin(res));
-    //     signin(res);
-    //     console.log('it is a success', res);
-    //     setRedirect(true);
-    //   }
-    // } catch (err) {
-    //   console.log('error from signup', err);
-    //   setValues({
-    //     ...values,
-    //     errorMessage: err.message,
-    //   });
-    // }
   }
 
   if (isAuthenticated) {

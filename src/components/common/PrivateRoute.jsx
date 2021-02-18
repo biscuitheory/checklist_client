@@ -13,10 +13,10 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
         return <h2>Loading...</h2>;
       }
       if (!auth.isAuthenticated) {
-        console.log('wesh la mifa', auth);
-        return <Redirect to="/" />;
+        console.log('user redirected cause auth is', auth);
+        return <Redirect to="/signin" />;
       }
-      console.log('tatayoyo', auth);
+      console.log('user is authenticated!', auth);
       return <Component {...props} />;
     }}
   />

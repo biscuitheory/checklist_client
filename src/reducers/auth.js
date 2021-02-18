@@ -1,6 +1,8 @@
 import {
-  SIGNIN_SUCCESS,
-  SIGNIN_FAIL,
+  AUTH_SUCCESS,
+  AUTH_FAIL,
+  // SIGNIN_SUCCESS,
+  // SIGNIN_FAIL,
   SIGNOUT_SUCCESS,
   USER_LOADING,
   USER_LOADED,
@@ -16,8 +18,7 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    case SIGNIN_SUCCESS:
-      // localStorage.setItem('token', action.payload.data.token);
+    case AUTH_SUCCESS:
       console.log('wesh papi', action);
       localStorage.setItem('token', action.payload.token);
       return {
@@ -49,7 +50,7 @@ const auth = (state = initialState, action) => {
         user: action.payload,
       };
     case AUTH_ERROR:
-    case SIGNIN_FAIL:
+    case AUTH_FAIL:
       localStorage.removeItem('token');
       return {
         ...state,

@@ -4,8 +4,10 @@ import axios from 'axios';
 import { returnErrors } from './messages';
 
 import {
-  SIGNIN_SUCCESS,
-  SIGNIN_FAIL,
+  // SIGNUP_SUCCESS,
+  // SIGNUP_FAIL,
+  AUTH_SUCCESS,
+  AUTH_FAIL,
   SIGNOUT_SUCCESS,
   GET_ERRORS,
   USER_LOADING,
@@ -51,9 +53,9 @@ export const loadUser = () => async (dispatch, getState) => {
     });
 };
 
-//  SIGNIN USER
-export const signin = (userData) => async (dispatch) => {
-  console.log('cancoillotte', userData);
+// SIGNUP USER
+export const signup = (userData) => async (dispatch) => {
+  console.log('data from signup form', userData);
   // Headers
   const config = {
     headers: {
@@ -63,16 +65,41 @@ export const signin = (userData) => async (dispatch) => {
 
   // Request Body
   const body = JSON.stringify(userData);
-  console.log('katchi', body);
+  console.log('data from signup form into body', body);
+
+  axios
+    .post(`${API}signup`, body, config)
+    .then((res) => {
+      dispatch({ type: AUTH_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({ type: AUTH_FAIL });
+    });
+};
+
+//  SIGNIN USER
+export const signin = (userData) => async (dispatch) => {
+  console.log('data from signin form', userData);
+  // Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Request Body
+  const body = JSON.stringify(userData);
+  console.log('data from signin form into body', body);
 
   axios
     .post(`${API}signin`, body, config)
     .then((res) => {
-      dispatch({ type: SIGNIN_SUCCESS, payload: res.data });
+      dispatch({ type: AUTH_SUCCESS, payload: res.data });
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: SIGNIN_FAIL });
+      dispatch({ type: AUTH_FAIL });
     });
 };
 
@@ -96,6 +123,6 @@ export const signout = (email, password) => async (dispatch) => {
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: SIGNIN_FAIL });
+      dispatch({ type: AUTH_FAIL });
     });
 };
