@@ -1,45 +1,45 @@
 import {
-  GET_LISTS,
-  ADD_LIST,
-  EDIT_LIST,
-  DELETE_LIST,
-  CLEAR_LISTS,
+  GET_TASKS,
+  ADD_TASK,
+  EDIT_TASK,
+  DELETE_TASK,
+  CLEAR_TASKS,
   POST_ERROR,
 } from '../actions/types';
 
 const initialState = {
-  lists: [],
+  tasks: [],
   isLoading: false,
   errors: {},
 };
 
-const lists = (state = initialState, action) => {
+const tasks = (state = initialState, action) => {
   switch (action.type) {
-    case GET_LISTS:
+    case GET_TASKS:
       return {
         ...state,
-        lists: action.payload,
+        tasks: action.payload,
         isLoading: false,
         errors: {},
       };
-    case ADD_LIST:
-    case EDIT_LIST:
+    case ADD_TASK:
+    case EDIT_TASK:
       return {
         ...state,
-        lists: [...state.lists, action.payload],
+        tasks: [...state.tasks, action.payload],
         isLoading: false,
         errors: {},
       };
-    case DELETE_LIST:
+    case DELETE_TASK:
       return {
         ...state,
-        lists: state.lists.filter((list) => list.id) !== action.payload,
+        tasks: state.tasks.filter((task) => task.id) !== action.payload,
         errors: {},
       };
-    case CLEAR_LISTS:
+    case CLEAR_TASKS:
       return {
         ...state,
-        lists: [],
+        tasks: [],
         errors: {},
       };
     case POST_ERROR:
@@ -53,4 +53,4 @@ const lists = (state = initialState, action) => {
   }
 };
 
-export default lists;
+export default tasks;

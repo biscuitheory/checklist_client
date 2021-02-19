@@ -42,3 +42,18 @@ export const addList = () => async (dispatch) => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
+
+// EDIT LIST
+export const editList = () => async (dispatch) => {
+  axios
+    .patch(`${API}lists`)
+    .then((res) => {
+      dispatch({
+        type: ADD_LIST,
+        payload: res.data,
+      });
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
