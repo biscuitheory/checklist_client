@@ -101,7 +101,7 @@ export const signout = () => async (dispatch, getState) => {
 export const tokenConfig = (getState) => {
   // Get token from state
   const { token } = getState().auth;
-  console.log('por todas', token);
+  console.log('es el token', token);
   // Headers
   const config = {
     headers: {

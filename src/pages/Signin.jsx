@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signin } from '../actions/auth';
@@ -12,7 +12,8 @@ import WelcomeTopIcon from '../components/layout/WelcomeTopIcon';
 import SignButton from '../components/buttons/SignButton';
 import SignButtonDivider from '../components/buttons/SignButtonDivider';
 
-const Signin = ({ signin, auth: { isAuthenticated } }) => {
+const Signin = ({ signin, auth: { isAuthenticated, token } }) => {
+  const [redirect, setRedirect] = useState(false);
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
   const initialState = {
@@ -26,13 +27,16 @@ const Signin = ({ signin, auth: { isAuthenticated } }) => {
     submit
   );
 
-  console.log('authenticated or not?', isAuthenticated);
+  console.log('token or not?', token);
 
   async function submit() {
     signin(values);
+    if (token) {
+      setRedirect(true);
+    }
   }
 
-  if (isAuthenticated) {
+  if (redirect && isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
   return (

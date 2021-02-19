@@ -28,20 +28,6 @@ const alertOptions = {
 };
 
 function App() {
-  // const dispatch = useDispatch();
-
-  // const fetchUser = async () => {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     const user = await axios.get(`${API}user/me`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //     dispatch(loaduser(user));
-  //   }
-  // };
-
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);

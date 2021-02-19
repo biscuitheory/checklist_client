@@ -23,7 +23,7 @@ const Dashboard = ({ getLists, auth, lists, list }) => {
       <Navbar />
       <div className="dashboard__container">
         <h2>
-          {auth.user.lastname}
+          {auth.user.firstname}
           &apos;s Board
         </h2>
         <div className="dashboard__container-lists">
