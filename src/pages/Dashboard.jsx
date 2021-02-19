@@ -6,19 +6,17 @@ import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH, faPenNib } from '@fortawesome/free-solid-svg-icons';
-import { getLists } from '../actions/lists';
 import { getTasks } from '../actions/tasks';
 
 import Navbar from '../components/layout/Navbar';
 import AddItemButton from '../components/buttons/AddItemButton';
 
-const Dashboard = ({ getLists, getTasks, auth, lists, tasks }) => {
+const Dashboard = ({ getTasks, auth, lists, tasks }) => {
   console.log('authenticated user', auth);
   console.log('tasks', tasks);
   // console.log('tasks', tasks);
 
   useEffect(() => {
-    getLists();
     getTasks();
   }, []);
 
@@ -31,9 +29,6 @@ const Dashboard = ({ getLists, getTasks, auth, lists, tasks }) => {
           &apos;s Board
         </h2>
         <div className="dashboard__container-lists">
-          {/* {lists.map((list, i) => (
-            <List key={i} list={list} />
-          ))} */}
           {tasks.map((task, i) => (
             <List key={i} task={task} />
           ))}
@@ -84,8 +79,7 @@ const Task = (Tasks) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  lists: state.lists.lists,
   tasks: state.tasks.tasks,
 });
 
-export default connect(mapStateToProps, { getLists, getTasks })(Dashboard);
+export default connect(mapStateToProps, { getTasks })(Dashboard);
