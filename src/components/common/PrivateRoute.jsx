@@ -17,7 +17,7 @@ const PrivateRoute = ({
         return <h2>Loading...</h2>;
       }
       if (!token) {
-        console.log('user redirected cause auth is', token);
+        console.log('user redirected cause token is', token);
         return <Redirect to="/signin" />;
       }
       console.log('user is authenticated!', token);

@@ -3,7 +3,7 @@ import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import ReactDOM from 'react-dom';
 
 const NavbarModal = forwardRef(({ children }, ref) => {
-  const [display, setDisplay] = useState(true);
+  const [display, setDisplay] = useState(false);
 
   useImperativeHandle(ref, () => {
     return {

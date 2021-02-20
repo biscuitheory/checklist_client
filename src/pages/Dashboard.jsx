@@ -12,6 +12,7 @@ import Navbar from '../components/layout/Navbar';
 import AddItemButton from '../components/buttons/AddItemButton';
 
 const Dashboard = ({ getTasks, auth, lists, tasks }) => {
+  const [formOpen, setFormOpen] = useState(false);
   console.log('authenticated user', auth);
   console.log('tasks', tasks);
   // console.log('tasks', tasks);
@@ -32,8 +33,13 @@ const Dashboard = ({ getTasks, auth, lists, tasks }) => {
           {tasks.map((task, i) => (
             <List key={i} task={task} />
           ))}
+          <div className="dashboard__container-lists-addlist-inside">
+            <AddItemButton text="list">list</AddItemButton>
+          </div>
         </div>
-        <AddItemButton text="list">Add a new list</AddItemButton>
+        <div className="dashboard__container-lists-addlist-outside">
+          <AddItemButton text="list">list</AddItemButton>
+        </div>
       </div>
     </>
   );
@@ -56,7 +62,7 @@ const List = ({ task }) => {
         {task.Tasks.map((task, i) => (
           <Task key={i} task={task} />
         ))}
-        <AddItemButton text="task">Add a new task</AddItemButton>
+        <AddItemButton text="task">task</AddItemButton>
       </div>
     </>
   );
@@ -68,7 +74,10 @@ const Task = (Tasks) => {
     <div className="dashboard__container-lists-list-card">
       <div className="dashboard__container-lists-list-card-header">
         <h3>{Tasks.task.name}</h3>
-        <FontAwesomeIcon icon={faPenNib} />
+        <FontAwesomeIcon
+          icon={faPenNib}
+          className="dashboard__container-lists-list-card-header-edit"
+        />
       </div>
       <div className="dashboard__container-lists-list-card-description">
         <p>{Tasks.task.description}</p>

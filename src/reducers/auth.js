@@ -19,14 +19,14 @@ const initialState = {
 const auth = (state = initialState, action) => {
   switch (action.type) {
     case AUTH_SUCCESS:
-      console.log('wesh papi', action);
+      console.log('here is the token', action.payload.token);
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         ...action.payload,
         isAuthenticated: true,
         isLoading: false,
-        // token: action.payload.data.token,
+        token: action.payload.token,
         // user: action.payload.data.user,
       };
     case SIGNOUT_SUCCESS:
@@ -36,6 +36,7 @@ const auth = (state = initialState, action) => {
         isAuthenticated: false,
         isLoading: false,
         token: null,
+        user: null,
       };
     case USER_LOADING:
       return {

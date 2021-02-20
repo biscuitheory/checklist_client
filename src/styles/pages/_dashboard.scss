@@ -13,11 +13,70 @@
     flex-direction: row;
     overflow: auto;
 
+    &-addlist {
+      &-outside {
+        padding: 0.3em 0.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.1em;
+        margin: 0.5em;
+        cursor: pointer;
+        @include media(sm-tablet) {
+          display: none;
+        }
+        @include media(lg-tablet) {
+          display: none;
+        }
+        @include media(desktop) {
+          display: none;
+        }
+      }
+      &-inside {
+        display: none;
+        @include media(sm-tablet) {
+          padding: 0.3em 0.5em;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          font-size: 1.1em;
+          cursor: pointer;
+        }
+        @include media(lg-tablet) {
+          padding: 0.3em 0.5em;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          font-size: 1.1em;
+          cursor: pointer;
+        }
+        @include media(desktop) {
+          padding: 0.3em 0.5em;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          font-size: 1.1em;
+          cursor: pointer;
+        }
+      }
+    }
+
     &-list {
       margin: 1em 0.3em;
-      width: 40em;
+      padding: 0.5em;
+      width: 80%;
+      height: 100%;
       border: 1px solid $color--brinput;
       border-radius: 0.2em;
+      @include media(sm-tablet) {
+        width: 20em;
+      }
+      @include media(lg-tablet) {
+        width: 25em;
+      }
+      @include media(desktop) {
+        width: 25em;
+      }
 
       &-header {
         display: flex;
@@ -27,29 +86,10 @@
         margin: 0.3em;
       }
 
-      &-footer {
-        padding: 0.3em 0.5em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.1em;
-        margin: 0.5em;
-        cursor: pointer;
-
-        & button {
-          background: none;
-          border: none;
-          font-family: 'Raleway';
-          font-size: 1em;
-          font-weight: 500;
-          margin-left: 0.5em;
-        }
-      }
-
       &-card {
-        border: 1px solid $color--brinput;
         border-radius: 0.2em;
-        background: $color--bginput;
+        background: $color--bgtask;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         margin: 0.5em;
         padding: 0.3em 0.5em;
 
@@ -58,6 +98,17 @@
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
+
+          & > h3 {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            text-align: justify;
+            white-space: nowrap;
+          }
+
+          &-edit {
+            cursor: pointer;
+          }
         }
       }
     }

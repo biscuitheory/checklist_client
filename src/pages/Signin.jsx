@@ -36,7 +36,7 @@ const Signin = ({ signin, auth: { isAuthenticated, token } }) => {
     }
   }
 
-  if (redirect && isAuthenticated) {
+  if (redirect) {
     return <Redirect to="/dashboard" />;
   }
   return (

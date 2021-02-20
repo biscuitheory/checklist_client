@@ -53,23 +53,79 @@
   cursor: pointer;
 }
 
-.add-item-button {
-  
-  padding: 0.3em 0.5em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.1em;
-  margin: 0.5em;
-  cursor: pointer;
+.add-item {
+  &-background {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 3px;
+    width: auto;
+    margin: 0.5em;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 
-  & button {
+  &-form {
+    &-button {
+      color: #ffffff;
+      background: $color--brinput;
+      border: none;
+      width: 6em;
+      height: 2em;
+      border-radius: 0.3em;
+      margin: 0.5em 0;
+      font-weight: 600;
+      font-size: 1rem;
+      font-family: 'Raleway';
+      cursor: pointer;
+    }
+
+    &-box {
+      resize: none;
+      width: 100%;
+      height: 2.5em;
+      overflow: hidden;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      padding: 0.5em;
+      font-family: 'Raleway';
+    }
+
+    &-cross {
+      margin-left: 1.5em;
+      color: $color--black;
+    }
+  }
+
+  &-box {
+    min-width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.1em;
+    margin: 0.5em;
+    padding: 0.3em 0.5em;
+    cursor: pointer;
+    overflow: 'visible';
+    padding: 6px 8px 2px;
+    @include media(sm-tablet) {
+      width: 15em;
+    }
+    @include media(lg-tablet) {
+      width: 20em;
+    }
+    @include media(desktop) {
+      width: 20em;
+    }
+  }
+
+  &-buttons {
     background: none;
     border: none;
     font-family: 'Raleway';
     font-size: 1em;
     font-weight: 500;
-    margin-left: 0.5em;
     min-width: 8em;
   }
 }

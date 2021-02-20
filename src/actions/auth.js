@@ -84,17 +84,23 @@ export const signin = (userData) => async (dispatch) => {
     });
 };
 
+// //  SIGNOUT USER
+// export const signout = () => async (dispatch, getState) => {
+//   axios
+//     .post(`${API}signout`, null, tokenConfig(getState))
+//     .then((res) => {
+//       dispatch({ type: CLEAR_LISTS });
+//       dispatch({ type: SIGNOUT_SUCCESS });
+//     })
+//     .catch((err) => {
+//       dispatch(returnErrors(err.response.data, err.response.status));
+//     });
+// };
+
 //  SIGNOUT USER
-export const signout = () => async (dispatch, getState) => {
-  axios
-    .post(`${API}signout`, null, tokenConfig(getState))
-    .then((res) => {
-      dispatch({ type: CLEAR_LISTS });
-      dispatch({ type: SIGNOUT_SUCCESS });
-    })
-    .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-    });
+export const signout = () => async (dispatch) => {
+  dispatch({ type: CLEAR_LISTS });
+  dispatch({ type: SIGNOUT_SUCCESS });
 };
 
 // TOKEN CONFIG - HELPER FUNCTION

@@ -1,16 +1,25 @@
+/* eslint-disable no-shadow */
 import React, { useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboard, faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import { faThLarge } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
 import NavbarModal from './NavbarModal';
+import { signout } from '../../actions/auth';
 
-const Navbar = () => {
+const Navbar = ({ signout }) => {
   const modalRef = useRef();
 
   const openModal = () => {
     modalRef.current.openModal();
   };
+
+  const signOut = async (event) => {
+    event.preventDefault();
+    signout();
+  };
+
   return (
     <div className="navbar__container">
       <div className="navbar__container-board">
@@ -29,11 +38,18 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faUserCircle} />
         </button>
         <NavbarModal ref={modalRef}>
-          <button type="submit">Sign out</button>
+          <button onClick={signOut} type="submit">
+            Sign out
+          </button>
         </NavbarModal>
       </div>
     </div>
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  // isAuthenticated: state.auth.isAuthenticated,
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { signout })(Navbar);
