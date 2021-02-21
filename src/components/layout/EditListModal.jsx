@@ -1,19 +1,20 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-shadow */
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { deleteList } from '../../actions/lists';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import EditList from '../EditList';
+// import { deleteList } from '../../actions/lists';
 
-const EditListModal = forwardRef(({ deleteList, listId }, ref) => {
-  console.log('these are the lists id', listId);
+const EditListModal = forwardRef(({ children }, ref) => {
+  // console.log('these are the lists id', listId);
   const [display, setDisplay] = useState(false);
 
-  const history = useHistory();
+  // const history = useHistory();
 
   useImperativeHandle(ref, () => {
     return {
@@ -30,9 +31,9 @@ const EditListModal = forwardRef(({ deleteList, listId }, ref) => {
     setDisplay(false);
   };
 
-  async function submit() {
-    deleteList(listId, history);
-  }
+  // async function submit() {
+  //   deleteList(listId, history);
+  // }
 
   // if () {
   //   return <Redirect to="/dashboard" />;
@@ -46,13 +47,7 @@ const EditListModal = forwardRef(({ deleteList, listId }, ref) => {
           role="presentation"
           className="editlist-modal-backdrop"
         />
-        <div className="editlist-modal-box">
-          <FontAwesomeIcon icon={faTrashAlt} />
-          <p>Do you really want to delete the list?</p>
-          <button type="submit" className="delete-item-button" onClick={submit}>
-            Delete the list
-          </button>
-        </div>
+        <EditList />
       </div>,
       document.getElementById('modal-root')
     );
@@ -62,8 +57,4 @@ const EditListModal = forwardRef(({ deleteList, listId }, ref) => {
 
 EditListModal.displayName = 'EditListModal';
 
-const mapStateToProps = (state) => ({
-  lists: state.lists,
-});
-
-export default connect(mapStateToProps, { deleteList })(EditListModal);
+export default EditListModal;
