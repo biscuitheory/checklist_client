@@ -4,6 +4,7 @@ import { tokenConfig } from './auth';
 
 import {
   GET_LISTS,
+  GET_LISTSTASKS,
   ADD_LIST,
   EDIT_LIST,
   DELETE_LIST,
@@ -13,13 +14,32 @@ import {
 
 const API = process.env.REACT_APP_DEV_API_URL;
 
-// GET LISTS
+// GET ALL THE LISTS OF AN USER
 export const getLists = () => async (dispatch, getState) => {
   axios
     .get(`${API}lists`, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: GET_LISTS,
+        payload: res.data,
+      });
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+// GET ALL THE LISTS + CORRESPONDING TASKS OF AN USER
+export const getListsTasks = () => async (dispatch, getState) => {
+  // console.log('your eyes', listId);
+
+  // const body = JSON.parse(listId);
+  // console.log('do you believe it', body);
+  axios
+    .get(`${API}liststasks`, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: GET_LISTSTASKS,
         payload: res.data,
       });
     })

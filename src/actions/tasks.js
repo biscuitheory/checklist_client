@@ -13,14 +13,10 @@ import {
 
 const API = process.env.REACT_APP_DEV_API_URL;
 
-// GET TASKS
+// GET ONLY TASKS FROM AN USER
 export const getTasks = () => async (dispatch, getState) => {
-  // console.log('your eyes', listId);
-
-  // const body = JSON.parse(listId);
-  // console.log('do you believe it', body);
   axios
-    .get(`${API}listasks`, tokenConfig(getState))
+    .get(`${API}tasks`, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: GET_TASKS,

@@ -1,11 +1,17 @@
 /* eslint-disable consistent-return */
+/* eslint-disable no-shadow */
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import { Redirect } from 'react-router-dom';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { deleteList } from '../../actions/lists';
 
-const EditListModal = forwardRef(({ children }, ref) => {
+const EditListModal = forwardRef(({ deleteList, listId }, ref) => {
+  const [redirect, setRedirect] = useState(false);
+  console.log('these are the lists id', listId);
   const [display, setDisplay] = useState(false);
 
   useImperativeHandle(ref, () => {
@@ -23,6 +29,14 @@ const EditListModal = forwardRef(({ children }, ref) => {
     setDisplay(false);
   };
 
+  async function submit() {
+    deleteList(listId);
+    setRedirect(true);
+  }
+
+  if (redirect) {
+    return <Redirect to="/dashboard" />;
+  }
   if (display) {
     return ReactDOM.createPortal(
       <div className="editlist-modal-wrapper">
@@ -35,7 +49,7 @@ const EditListModal = forwardRef(({ children }, ref) => {
         <div className="editlist-modal-box">
           <FontAwesomeIcon icon={faTrashAlt} />
           <p>Do you really want to delete the list?</p>
-          <button type="submit" className="delete-item-button">
+          <button type="submit" className="delete-item-button" onClick={submit}>
             Delete the list
           </button>
         </div>
@@ -48,4 +62,8 @@ const EditListModal = forwardRef(({ children }, ref) => {
 
 EditListModal.displayName = 'EditListModal';
 
-export default EditListModal;
+const mapStateToProps = (state) => ({
+  tasks: state.tasks.tasks,
+});
+
+export default connect(mapStateToProps, { deleteList })(EditListModal);

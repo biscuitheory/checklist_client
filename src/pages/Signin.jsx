@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signin } from '../actions/auth';
 
@@ -12,33 +12,26 @@ import WelcomeTopIcon from '../components/layout/WelcomeTopIcon';
 import SignButton from '../components/buttons/SignButton';
 import SignButtonDivider from '../components/buttons/SignButtonDivider';
 
-const Signin = ({ signin, auth: { isAuthenticated, token } }) => {
-  const [redirect, setRedirect] = useState(false);
+const Signin = ({ signin, auth }) => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
+
+  const history = useHistory();
 
   const initialState = {
     email: '',
     password: '',
   };
 
-  const { handleChange, handleSubmit, values, setValues, errors } = useForm(
+  const { handleChange, handleSubmit, values, errors } = useForm(
     initialState,
     validate,
     submit
   );
 
-  console.log('token or not?', token);
-
   async function submit() {
-    signin(values);
-    if (token) {
-      setRedirect(true);
-    }
+    signin(values, history);
   }
 
-  if (redirect) {
-    return <Redirect to="/dashboard" />;
-  }
   return (
     <div className="welcome__container">
       <div className="welcome__container-leftpanel">
@@ -84,11 +77,9 @@ const Signin = ({ signin, auth: { isAuthenticated, token } }) => {
                 Sign in
               </SignButton>
               <SignButtonDivider />
-              {/* <a href="/signup" className="signbutton__link"> */}
               <SignButton type="button" value="signup">
                 Sign up
               </SignButton>
-              {/* </a> */}
             </span>
           </form>
         </div>
@@ -104,7 +95,6 @@ const Signin = ({ signin, auth: { isAuthenticated, token } }) => {
 // };
 
 const mapStateToProps = (state) => ({
-  // isAuthenticated: state.auth.isAuthenticated,
   auth: state.auth,
 });
 

@@ -60,7 +60,7 @@ export const signup = (userData) => async (dispatch) => {
 };
 
 //  SIGNIN USER
-export const signin = (userData) => async (dispatch) => {
+export const signin = (userData, history) => (dispatch) => {
   console.log('data from signin form', userData);
   // Headers
   const config = {
@@ -77,6 +77,7 @@ export const signin = (userData) => async (dispatch) => {
     .post(`${API}signin`, body, config)
     .then((res) => {
       dispatch({ type: AUTH_SUCCESS, payload: res.data });
+      history.push('/dashboard');
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));

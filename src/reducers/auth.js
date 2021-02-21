@@ -12,7 +12,7 @@ import {
 const initialState = {
   isAuthenticated: false,
   isLoading: false,
-  token: localStorage.getItem('token') || {},
+  token: localStorage.getItem('token'),
   user: {},
 };
 
@@ -26,7 +26,7 @@ const auth = (state = initialState, action) => {
         ...action.payload,
         isAuthenticated: true,
         isLoading: false,
-        token: action.payload.token,
+        // token: action.payload.token,
         // user: action.payload.data.user,
       };
     case SIGNOUT_SUCCESS:
@@ -35,8 +35,8 @@ const auth = (state = initialState, action) => {
         ...state,
         isAuthenticated: false,
         isLoading: false,
-        token: null,
-        user: null,
+        token: {},
+        user: {},
       };
     case USER_LOADING:
       return {
@@ -46,6 +46,7 @@ const auth = (state = initialState, action) => {
     case USER_LOADED:
       return {
         ...state,
+        ...action.payload,
         isAuthenticated: true,
         isLoading: false,
         user: action.payload,

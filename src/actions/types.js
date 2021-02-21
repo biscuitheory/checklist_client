@@ -8,6 +8,7 @@ export const CREATE_MESSAGE = 'CREATE_MESSAGE';
 export const USER_LOADING = 'USER_LOADING';
 export const USER_LOADED = 'USER_LOADED';
 export const GET_LISTS = 'GET_LISTS';
+export const GET_LISTSTASKS = 'GET_LISTSTASKS';
 // export const GET_LIST = 'GET_LIST';
 export const ADD_LIST = 'ADD_LIST';
 export const EDIT_LIST = 'EDIT_LIST';

@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH, faPenNib } from '@fortawesome/free-solid-svg-icons';
+import { getListsTasks, editList } from '../actions/lists';
 import { getTasks } from '../actions/tasks';
-import { editList } from '../actions/lists';
+
 import useForm from '../components/customedhooks/useForm';
 import validate from '../components/validators/validateEditList';
 
@@ -17,13 +18,15 @@ import AddItemButton from '../components/buttons/AddItemButton';
 import EditListModal from '../components/layout/EditListModal';
 import EditTaskModal from '../components/layout/EditTaskModal';
 
-const Dashboard = ({ getTasks, auth, lists, tasks }) => {
+const Dashboard = ({ getListsTasks, getTasks, auth, lists, tasks }) => {
   const [formOpen, setFormOpen] = useState(false);
   console.log('authenticated user', auth);
-  console.log('tasks', tasks);
+  console.log('tasks top', tasks);
+  console.log('lists top', lists);
   // console.log('tasks', tasks);
 
   useEffect(() => {
+    getListsTasks();
     getTasks();
   }, []);
 
@@ -36,8 +39,8 @@ const Dashboard = ({ getTasks, auth, lists, tasks }) => {
           &apos;s Board
         </h2>
         <div className="dashboard__container-lists">
-          {tasks.map((task, i) => (
-            <List key={i} task={task} />
+          {lists.map((list, i) => (
+            <List key={i} list={list} />
           ))}
           <div className="dashboard__container-lists-addlist-inside">
             <AddItemButton text="list">list</AddItemButton>
@@ -51,8 +54,8 @@ const Dashboard = ({ getTasks, auth, lists, tasks }) => {
   );
 };
 
-const List = ({ task, editList }) => {
-  const { id, name } = task;
+const List = ({ list, editList }) => {
+  const { id, name } = list;
   const modalRef = useRef();
 
   const openModal = () => {
@@ -83,16 +86,16 @@ const List = ({ task, editList }) => {
   );
 
   async function submitEditList() {
-    editList(task.id, values.name);
+    editList(list.id, values.name);
   }
 
-  console.log('tasks', task);
+  console.log('tasks', list);
   return (
     <>
       <div className="dashboard__container-lists-list">
         <div className="dashboard__container-lists-list-header">
           {toggle ? (
-            <h3 onDoubleClick={toggleInput}>{task.name}</h3>
+            <h3 onDoubleClick={toggleInput}>{list.name}</h3>
           ) : (
             <input
               type="text"
@@ -104,11 +107,11 @@ const List = ({ task, editList }) => {
           <FontAwesomeIcon
             icon={faEllipsisH}
             nature="ellipse"
-            onClick={openModal}
+            onMouseDown={openModal}
           />
-          <EditListModal ref={modalRef} listId={task.id} />
+          <EditListModal ref={modalRef} listId={list.id} />
         </div>
-        {task.Tasks.map((task, i) => (
+        {list.Tasks.map((task, i) => (
           <Task key={i} task={task} />
         ))}
         <AddItemButton text="task">task</AddItemButton>
@@ -145,7 +148,10 @@ const Task = (Tasks) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  tasks: state.tasks.tasks,
+  // tasks: state.tasks.tasks,
+  lists: state.lists.lists,
 });
 
-export default connect(mapStateToProps, { getTasks, editList })(Dashboard);
+export default connect(mapStateToProps, { getListsTasks, getTasks, editList })(
+  Dashboard
+);

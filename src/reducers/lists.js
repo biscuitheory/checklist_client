@@ -1,5 +1,6 @@
 import {
   GET_LISTS,
+  GET_LISTSTASKS,
   ADD_LIST,
   EDIT_LIST,
   DELETE_LIST,
@@ -16,6 +17,13 @@ const initialState = {
 const lists = (state = initialState, action) => {
   switch (action.type) {
     case GET_LISTS:
+      return {
+        ...state,
+        lists: action.payload,
+        isLoading: false,
+        errors: {},
+      };
+    case GET_LISTSTASKS:
       return {
         ...state,
         lists: action.payload,
