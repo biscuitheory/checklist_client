@@ -1,0 +1,236 @@
+.modal {
+  &-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  &-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: transparent;
+  }
+
+  &-box {
+    position: relative;
+    margin: 3em 2.5em 0 0;
+    height: 3em;
+    width: 6em;
+    background: #ffffff;
+    box-shadow: 0 0 10px #c4c4c4;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.editlist-modal {
+  &-wrapper {
+    border: 1px solid red;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: $color--brinput;
+    opacity: 0.8;
+  }
+
+  &-box {
+    position: relative;
+    height: 10em;
+    width: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 10px #c4c4c4;
+    border-radius: 5px;
+    z-index: 100;
+    padding: 1em 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    @include media(sm-tablet) {
+      padding: 1.5em;
+    }
+    @include media(lg-tablet) {
+      padding: 1.5em;
+      max-width: 35em;
+    }
+    @include media(desktop) {
+      padding: 1.5em;
+      max-width: 35em;
+    }
+
+    & > p {
+      text-align: center;
+    }
+  }
+}
+
+.edittask-modal {
+  &-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: $color--brinput;
+    opacity: 0.8;
+  }
+
+  &-box {
+    position: relative;
+    height: 30em;
+    width: 70%;
+    max-width: 35em;
+    background: #ffffff;
+    box-shadow: 0 0 10px #c4c4c4;
+    border-radius: 5px;
+    z-index: 100;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    @include media(sm-tablet) {
+      padding: 1.5em;
+    }
+    @include media(lg-tablet) {
+      padding: 1.5em;
+      max-width: 35em;
+    }
+    @include media(desktop) {
+      padding: 1.5em;
+      max-width: 35em;
+    }
+
+    & > p {
+      text-align: center;
+    }
+    & > button {
+      color: #ffffff;
+      background: $color--red;
+      border: none;
+      width: 7em;
+      height: 2em;
+      border-radius: 0.3em;
+      margin: 0.5em 0;
+      font-weight: 600;
+      font-size: 1rem;
+      font-family: 'Raleway';
+      cursor: pointer;
+    }
+
+    &-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      // border: 1px solid red;
+      width: 100%;
+
+      &-title {
+        display: flex;
+        align-items: center;
+
+        & > h3 {
+          margin-left: 0.5em;
+        }
+      }
+    }
+
+    &-body {
+      margin: 0 0.5em;
+      @include media(sm-tablet) {
+        width: 70%;
+        max-width: 30em;
+        // margin: 20% 65% 0 0;
+      }
+      @include media(lg-tablet) {
+        width: 70%;
+        max-width: 30em;
+        // margin: 50% 4% 0 0;
+      }
+      @include media(desktop) {
+        width: 70%;
+        max-width: 30em;
+        // margin: 50% 4% 0 0;
+      }
+      &-form {
+        &-box {
+          resize: none;
+          width: 100%;
+          height: 6em;
+          overflow: hidden;
+          outline: none;
+          border-radius: 5px;
+          padding: 0.5em;
+          font-family: 'Raleway';
+        }
+      }
+      &-delete {
+        margin: 0 0.5em;
+        text-align: justify;
+        @include media(sm-tablet) {
+          width: 70%;
+          max-width: 30em;
+          // margin: 20% 65% 0 0;
+        }
+        @include media(lg-tablet) {
+          width: 70%;
+          max-width: 30em;
+          // margin: 50% 4% 0 0;
+        }
+        @include media(desktop) {
+          width: 70%;
+          max-width: 30em;
+          // margin: 50% 4% 0 0;
+        }
+
+        &-title {
+          display: flex;
+          align-items: center;
+          & > h3 {
+            margin-left: 0.5em;
+          }
+        }
+      }
+    }
+  }
+}

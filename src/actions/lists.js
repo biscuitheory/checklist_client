@@ -44,13 +44,43 @@ export const addList = () => async (dispatch) => {
 };
 
 // EDIT LIST
-export const editList = () => async (dispatch) => {
+export const editList = (listData) => async (dispatch) => {
+  console.log('data list from edit list form', listData);
+
+  // Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // Request Body
+  const body = JSON.stringify(listData);
+  console.log('data from edit list form into body', body);
+
   axios
-    .patch(`${API}lists`)
+    .patch(`${API}lists`, body, config)
     .then((res) => {
       dispatch({
-        type: ADD_LIST,
+        type: EDIT_LIST,
         payload: res.data,
+      });
+      console.log('le nom de la liste est éditée !');
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+// DELETE LIST
+export const deleteList = (id) => async (dispatch, getState) => {
+  console.log('rdv des lists id', id);
+  axios
+    .delete(`${API}lists`, id, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: DELETE_LIST,
+        payload: id,
       });
     })
     .catch((err) =>
