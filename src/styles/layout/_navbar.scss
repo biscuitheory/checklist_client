@@ -2,11 +2,17 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin: 1em;
+  font-size: 1.5em;
 
   &-board {
     display: flex;
     flex-direction: row;
+
+    & button:visited {
+      outline: none;
+    }
 
     & h2 {
       display: none;
@@ -15,5 +21,55 @@
         font-size: 1em;
       }
     }
+  }
+
+  &-user {
+    &-button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 1em;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+.navbar__modal {
+  &-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  &-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: transparent;
+  }
+
+  &-box {
+    position: relative;
+    margin: 3em 2.5em 0 0;
+    height: 3em;
+    width: 6em;
+    background: #ffffff;
+    box-shadow: 0 0 10px #c4c4c4;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 }

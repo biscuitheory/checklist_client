@@ -1,4 +1,5 @@
 /* eslint-disable no-shadow */
+/* eslint-disable no-lone-blocks */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -8,20 +9,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import useForm from '../customedhooks/useForm';
 import validate from '../validators/validateAddItem';
-import { addList } from '../../actions/lists';
+// import { addList } from '../../actions/lists';
 import { addTask } from '../../actions/tasks';
 
-const AddItemButton = ({
+const AddTaskButton = ({
   listId,
   text,
   children,
-  addList,
+  // addList,
   addTask,
   auth,
   messages,
 }) => {
   const [formOpen, setFormOpen] = useState(false);
-
   console.log('eeasy', messages);
 
   const open = () => {
@@ -41,15 +41,7 @@ const AddItemButton = ({
 
   const buttonTitle = text === 'list' ? 'Add List' : 'Add Task';
 
-  // const addListP = addList({ user_id: auth.user.id, name: values.name });
-
-  // const addTaskP = addTask({
-  //   user_id: auth.user.id,
-  //   name: values.name,
-  //   description: 'Description à compléter',
-  //   priority_id: 3,
-  //   list_id: listId,
-  // });
+  // const valueButton = text === 'list' ? 'addList' : 'addTask';
 
   const initialState = {
     name: '',
@@ -61,20 +53,58 @@ const AddItemButton = ({
     submit
   );
 
-  const valueButton = text === 'list' ? 'addList' : 'addTask';
+  console.log('un', auth.user.id);
+  console.log('deux', values.name);
+  console.log('trois', listId);
+  // const submitAction =
+  //   text === 'list'
+  //     ? addList({ user_id: auth.user.id, name: values.name })
+  //     : addTask({
+  //         user_id: auth.user.id,
+  //         name: values.name,
+  //         description: {},
+  //         priority_id: 3,
+  //         list_id: listId,
+  //       });
+
+  // {
+  //   text === 'list'
+  //     ? async function submit() {
+  //         addList({ user_id: auth.user.id, name: values.name });
+  //       }
+  //     : async function submit() {
+  //         addTask({
+  //           user_id: auth.user.id,
+  //           name: values.name,
+  //           description: {},
+  //           priority_id: 3,
+  //           list_id: listId,
+  //         });
+  //       };
+  // }
+
+  // async function submit() {
+  //   {
+  //     text === 'list'
+  //       ? addList({ user_id: auth.user.id, name: values.name })
+  //       : addTask({
+  //           user_id: auth.user.id,
+  //           name: values.name,
+  //           description: {},
+  //           priority_id: 3,
+  //           list_id: listId,
+  //         });
+  //   }
+  // }
 
   async function submit() {
-    {
-      text === 'list'
-        ? addList({ user_id: auth.user.id, name: values.name })
-        : addTask({
-            user_id: auth.user.id,
-            name: values.name,
-            description: 'Description à compléter',
-            priority_id: 3,
-            list_id: listId,
-          });
-    }
+    addTask({
+      user_id: auth.user.id,
+      name: values.name,
+      description: 'Description à compléter',
+      priority_id: 3,
+      list_id: listId,
+    });
   }
 
   function refreshPage() {
@@ -111,8 +141,7 @@ const AddItemButton = ({
             {errors.name && <p className="error">{errors.name}</p>}
             <button
               type="submit"
-              // value="addList"
-              value={valueButton}
+              value="addTask"
               className="add-item-form-button"
               onClick={() => refreshPage()}
             >
@@ -143,4 +172,4 @@ const mapStateToProps = (state) => ({
   messages: state.messages.state,
 });
 
-export default connect(mapStateToProps, { addList, addTask })(AddItemButton);
+export default connect(mapStateToProps, { addTask })(AddTaskButton);

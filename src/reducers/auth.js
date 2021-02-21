@@ -1,35 +1,69 @@
+import {
+  AUTH_SUCCESS,
+  AUTH_FAIL,
+  // SIGNIN_SUCCESS,
+  // SIGNIN_FAIL,
+  SIGNOUT_SUCCESS,
+  USER_LOADING,
+  USER_LOADED,
+  AUTH_ERROR,
+} from '../actions/types';
+
 const initialState = {
   isAuthenticated: false,
-  token: localStorage.getItem('token') || {},
+  isLoading: false,
+  token: localStorage.getItem('token'),
   user: {},
 };
 
-const AuthReducer = (state = initialState, action) => {
+const auth = (state = initialState, action) => {
   switch (action.type) {
-    case 'SIGNIN':
-      localStorage.setItem('token', action.payload.data.token);
+    case AUTH_SUCCESS:
+      console.log('here is the token', action.payload.token);
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
+        ...action.payload,
         isAuthenticated: true,
-        token: action.payload.data.token,
-        user: action.payload.data.user,
+        isLoading: false,
+        // token: action.payload.token,
+        // user: action.payload.data.user,
       };
-    case 'SIGNOUT':
+    case SIGNOUT_SUCCESS:
       localStorage.clear();
       return {
         ...state,
         isAuthenticated: false,
-        token: null,
+        isLoading: false,
+        token: {},
+        user: {},
       };
-    case 'LOAD_USER':
+    case USER_LOADING:
       return {
         ...state,
+        isLoading: true,
+      };
+    case USER_LOADED:
+      return {
+        ...state,
+        ...action.payload,
         isAuthenticated: true,
-        user: action.payload.data,
+        isLoading: false,
+        user: action.payload,
+      };
+    case AUTH_ERROR:
+    case AUTH_FAIL:
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        token: {},
+        user: {},
+        isAuthenticated: false,
+        isLoading: false,
       };
     default:
       return state;
   }
 };
 
-export default AuthReducer;
+export default auth;

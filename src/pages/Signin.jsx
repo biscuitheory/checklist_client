@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+/* eslint-disable no-shadow */
+import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import { signin } from '../actions/index';
+import { connect } from 'react-redux';
+import { signin } from '../actions/auth';
 
 import usePasswordToggle from '../components/customedhooks/usePasswordToggle';
 import useForm from '../components/customedhooks/useForm';
@@ -12,47 +12,26 @@ import WelcomeTopIcon from '../components/layout/WelcomeTopIcon';
 import SignButton from '../components/buttons/SignButton';
 import SignButtonDivider from '../components/buttons/SignButtonDivider';
 
-const API = process.env.REACT_APP_DEV_API_URL;
-
-const Signin = () => {
+const Signin = ({ signin, auth: { isAuthenticated } }) => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-  const dispatch = useDispatch();
-  const [redirect, setRedirect] = useState(false);
 
   const initialState = {
     email: '',
     password: '',
   };
 
-  const { handleChange, handleSubmit, values, setValues, errors } = useForm(
+  const { handleChange, handleSubmit, values, errors } = useForm(
     initialState,
     validate,
     submit
   );
 
   async function submit() {
-    try {
-      const res = await axios.post(`${API}signin`, {
-        email: values.email,
-        password: values.password,
-      });
-
-      if (res.status === 200) {
-        dispatch(signin(res));
-        console.log('it is a success', res);
-        setRedirect(true);
-      }
-    } catch (err) {
-      console.log('error from signup', err);
-      setValues({
-        ...values,
-        errorMessage: err.message,
-      });
-    }
+    signin(values);
   }
 
-  if (redirect) {
-    return <Redirect to="/board" />;
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
   }
   return (
     <div className="welcome__container">
@@ -99,11 +78,9 @@ const Signin = () => {
                 Sign in
               </SignButton>
               <SignButtonDivider />
-              {/* <a href="/signup" className="signbutton__link"> */}
               <SignButton type="button" value="signup">
                 Sign up
               </SignButton>
-              {/* </a> */}
             </span>
           </form>
         </div>
@@ -113,4 +90,13 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+// Signin.propTypes = {
+//   signin: PropTypes.func.isRequired,
+//   isAuthenticated: PropTypes.bool,
+// };
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { signin })(Signin);
