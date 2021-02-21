@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { returnErrors } from './messages';
+import { createMessage, returnErrors } from './messages';
 import { tokenConfig } from './auth';
 
 import {
@@ -29,14 +29,19 @@ export const getTasks = () => async (dispatch, getState) => {
 };
 
 // ADD TASK
-export const addTask = () => async (dispatch) => {
+export const addTask = (data) => async (dispatch, getState) => {
+  console.log('taskskssks', data);
+  // Request Body
+  const body = JSON.stringify(data);
+  console.log('data from addlist into body', body);
   axios
-    .post(`${API}task`)
+    .post(`${API}tasks`, body, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: ADD_TASK,
         payload: res.data,
       });
+      dispatch(createMessage({ addList: 'Task Added' }));
     })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

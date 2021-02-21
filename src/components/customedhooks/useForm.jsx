@@ -22,7 +22,7 @@ const useForm = (initialState, validate, callback) => {
     setErrors(validate(values));
     setIsSubmitting(true);
   };
-
+  console.log('errors', values);
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       callback();

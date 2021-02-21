@@ -12,6 +12,7 @@ import useForm from '../customedhooks/useForm';
 import validate from '../validators/validateEditList';
 
 import AddItemButton from '../buttons/AddItemButton';
+// import AddTaskButton from '../buttons/AddTaskButton';
 import EditListModal from './EditListModal';
 import Task from './Task';
 
@@ -49,7 +50,6 @@ const List = ({ list, editList }) => {
     editList({ list_id: list.id, name: values.name });
   }
 
-  console.log('list', list.Tasks);
   return (
     <>
       <div className="dashboard__container-lists-list">
@@ -65,7 +65,12 @@ const List = ({ list, editList }) => {
         {list.Tasks.map((task) => (
           <Task key={task.id} task={task} />
         ))}
-        <AddItemButton text="task">task</AddItemButton>
+        <AddItemButton text="task" listId={list.id}>
+          task
+        </AddItemButton>
+        {/* <AddTaskButton text="task" listId={list.id}>
+          task
+        </AddTaskButton> */}
       </div>
     </>
   );
