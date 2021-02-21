@@ -1,11 +1,19 @@
+/* eslint-disable no-shadow */
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Textarea from 'react-textarea-autosize';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import useForm from '../customedhooks/useForm';
+import validate from '../validators/validateAddItem';
+import { addList } from '../../actions/lists';
 
-const AddItemButton = ({ text, children }) => {
+const AddItemButton = ({ text, children, addList, auth, messages }) => {
   const [formOpen, setFormOpen] = useState(false);
+
+  console.log('eeasy', messages);
 
   const open = () => {
     setFormOpen(true);
@@ -24,6 +32,24 @@ const AddItemButton = ({ text, children }) => {
 
   const buttonTitle = text === 'list' ? 'Add List' : 'Add Task';
 
+  const initialState = {
+    name: '',
+  };
+
+  const { handleChange, handleSubmit, values, errors } = useForm(
+    initialState,
+    validate,
+    submit
+  );
+
+  async function submit() {
+    addList({ user_id: auth.user.id, name: values.name });
+  }
+
+  function refreshPage() {
+    window.location.reload();
+  }
+
   return (
     <div
       style={{
@@ -33,25 +59,39 @@ const AddItemButton = ({ text, children }) => {
       }}
       className="add-item-background"
     >
-      <div className="add-item-box">
+      <div className="add-item-container">
         {formOpen ? (
-          <div className="add-item-form">
+          <form
+            onSubmit={handleSubmit}
+            noValidate
+            className="add-item-container-form"
+          >
             <Textarea
               placeholder={placeholder}
               autoFocus
-              className="add-item-form-box"
+              className="add-item-container-form-input"
+              onChange={handleChange}
               // onBlur={close}
-              // value={values.listname}
+              value={values.name}
+              name="name"
+              id="id"
+              type="text"
             />
-            <button type="submit" className="add-item-form-button">
+            {errors.name && <p className="error">{errors.name}</p>}
+            <button
+              type="submit"
+              value="addList"
+              className="add-item-form-button"
+              onClick={() => refreshPage()}
+            >
               {buttonTitle}
             </button>
             <FontAwesomeIcon
-              className="add-item-form-cross"
+              className="add-item-container-form-cross"
               icon={faTimes}
-              onClick={close}
+              onMouseDown={close}
             />
-          </div>
+          </form>
         ) : (
           <div className="add-item-button">
             <button className="add-item-buttons" type="button" onClick={open}>
@@ -66,4 +106,9 @@ const AddItemButton = ({ text, children }) => {
   );
 };
 
-export default AddItemButton;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  messages: state.messages.state,
+});
+
+export default connect(mapStateToProps, { addList })(AddItemButton);

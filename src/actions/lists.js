@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { returnErrors } from './messages';
+import { createMessage, returnErrors } from './messages';
 import { tokenConfig } from './auth';
 
 import {
@@ -30,13 +30,13 @@ export const getLists = () => async (dispatch, getState) => {
 };
 
 // GET ALL THE LISTS + CORRESPONDING TASKS OF AN USER
-export const getListsTasks = () => async (dispatch, getState) => {
-  // console.log('your eyes', listId);
+export const getListsTasks = (userId) => async (dispatch, getState) => {
+  console.log('your eyes', userId);
 
-  // const body = JSON.parse(listId);
+  // const body = JSON.stringify(userId);
   // console.log('do you believe it', body);
   axios
-    .get(`${API}liststasks`, tokenConfig(getState))
+    .post(`${API}liststasks`, { user_id: userId }, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: GET_LISTSTASKS,
@@ -49,14 +49,21 @@ export const getListsTasks = () => async (dispatch, getState) => {
 };
 
 // ADD LIST
-export const addList = () => async (dispatch) => {
+export const addList = (data) => async (dispatch, getState) => {
+  console.log('data from addlist form', data);
+
+  // Request Body
+  const body = JSON.stringify(data);
+  console.log('data from addlist into body', body);
+
   axios
-    .post(`${API}lists`)
+    .post(`${API}lists`, body, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: ADD_LIST,
         payload: res.data,
       });
+      dispatch(createMessage({ addList: 'List Added' }));
     })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
