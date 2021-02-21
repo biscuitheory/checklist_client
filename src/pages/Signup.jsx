@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signup } from '../actions/auth';

@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-shadow */
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
@@ -10,9 +10,10 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { deleteList } from '../../actions/lists';
 
 const EditListModal = forwardRef(({ deleteList, listId }, ref) => {
-  const [redirect, setRedirect] = useState(false);
   console.log('these are the lists id', listId);
   const [display, setDisplay] = useState(false);
+
+  const history = useHistory();
 
   useImperativeHandle(ref, () => {
     return {
@@ -30,13 +31,12 @@ const EditListModal = forwardRef(({ deleteList, listId }, ref) => {
   };
 
   async function submit() {
-    deleteList(listId);
-    setRedirect(true);
+    deleteList(listId, history);
   }
 
-  if (redirect) {
-    return <Redirect to="/dashboard" />;
-  }
+  // if () {
+  //   return <Redirect to="/dashboard" />;
+  // }
   if (display) {
     return ReactDOM.createPortal(
       <div className="editlist-modal-wrapper">
@@ -63,7 +63,7 @@ const EditListModal = forwardRef(({ deleteList, listId }, ref) => {
 EditListModal.displayName = 'EditListModal';
 
 const mapStateToProps = (state) => ({
-  tasks: state.tasks.tasks,
+  lists: state.lists,
 });
 
 export default connect(mapStateToProps, { deleteList })(EditListModal);

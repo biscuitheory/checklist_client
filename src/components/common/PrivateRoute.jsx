@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 const PrivateRoute = ({
   component: Component,
-  auth: { token, isAuthenticated, isLoading },
+  auth: { user, isAuthenticated, isLoading },
   ...rest
 }) => (
   <Route
@@ -20,7 +20,6 @@ const PrivateRoute = ({
         console.log('user redirected cause is not auth', isAuthenticated);
         return <Redirect to="/signin" />;
       }
-      console.log('user has a token!', token);
       return <Component {...props} />;
     }}
   />

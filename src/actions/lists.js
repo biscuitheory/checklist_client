@@ -93,7 +93,7 @@ export const editList = (listData) => async (dispatch) => {
 };
 
 // DELETE LIST
-export const deleteList = (id) => async (dispatch, getState) => {
+export const deleteList = (id, history) => async (dispatch, getState) => {
   console.log('rdv des lists id', id);
   axios
     .delete(`${API}lists`, id, tokenConfig(getState))
@@ -102,6 +102,7 @@ export const deleteList = (id) => async (dispatch, getState) => {
         type: DELETE_LIST,
         payload: id,
       });
+      history.push('/dashboard');
     })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

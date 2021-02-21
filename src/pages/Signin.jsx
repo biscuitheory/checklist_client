@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signin } from '../actions/auth';
 
@@ -12,10 +12,8 @@ import WelcomeTopIcon from '../components/layout/WelcomeTopIcon';
 import SignButton from '../components/buttons/SignButton';
 import SignButtonDivider from '../components/buttons/SignButtonDivider';
 
-const Signin = ({ signin, auth }) => {
+const Signin = ({ signin, auth: { isAuthenticated } }) => {
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-
-  const history = useHistory();
 
   const initialState = {
     email: '',
@@ -29,9 +27,12 @@ const Signin = ({ signin, auth }) => {
   );
 
   async function submit() {
-    signin(values, history);
+    signin(values);
   }
 
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <div className="welcome__container">
       <div className="welcome__container-leftpanel">
