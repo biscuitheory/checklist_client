@@ -1,5 +1,6 @@
-export const AUTH_SUCCESS = 'AUTH_FORM_SUCCESS';
-export const AUTH_FAIL = 'AUTH_FORM_FAIL';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
+export const AUTH_FORM_FAIL = 'AUTH_FORM_FAIL';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const SIGNOUT_SUCCESS = 'SIGNOUT_SUCCESS';
 export const GET_ERRORS = 'GET_ERRORS';

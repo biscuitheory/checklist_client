@@ -4,10 +4,9 @@ import axios from 'axios';
 import { returnErrors } from './messages';
 
 import {
-  // SIGNUP_SUCCESS,
-  // SIGNUP_FAIL,
-  AUTH_SUCCESS,
-  AUTH_FAIL,
+  SIGNUP_SUCCESS,
+  SIGNIN_SUCCESS,
+  AUTH_FORM_FAIL,
   SIGNOUT_SUCCESS,
   GET_ERRORS,
   USER_LOADING,
@@ -35,7 +34,7 @@ export const loadUser = () => async (dispatch, getState) => {
 };
 
 // SIGNUP USER
-export const signup = (userData) => async (dispatch) => {
+export const signup = (userData, setToHome) => async (dispatch) => {
   console.log('data from signup form', userData);
   // Headers
   const config = {
@@ -51,11 +50,12 @@ export const signup = (userData) => async (dispatch) => {
   axios
     .post(`${API}signup`, body, config)
     .then((res) => {
-      dispatch({ type: AUTH_SUCCESS, payload: res.data });
+      dispatch({ type: SIGNUP_SUCCESS, payload: res.data });
+      setTimeout(() => setToHome(true), 1000);
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: AUTH_FAIL });
+      dispatch({ type: AUTH_FORM_FAIL });
     });
 };
 
@@ -76,11 +76,11 @@ export const signin = (userData) => (dispatch) => {
   axios
     .post(`${API}signin`, body, config)
     .then((res) => {
-      dispatch({ type: AUTH_SUCCESS, payload: res.data });
+      dispatch({ type: SIGNIN_SUCCESS, payload: res.data });
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: AUTH_FAIL });
+      dispatch({ type: AUTH_FORM_FAIL });
     });
 };
 

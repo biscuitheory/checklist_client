@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signin } from '../actions/auth';
@@ -13,6 +13,7 @@ import SignButton from '../components/buttons/SignButton';
 import SignButtonDivider from '../components/buttons/SignButtonDivider';
 
 const Signin = ({ signin, auth: { isAuthenticated } }) => {
+  const [toHome, setToHome] = useState(false);
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
   const initialState = {
@@ -34,59 +35,66 @@ const Signin = ({ signin, auth: { isAuthenticated } }) => {
     return <Redirect to="/dashboard" />;
   }
   return (
-    <div className="welcome__container">
-      <div className="welcome__container-leftpanel">
-        <WelcomeTopIcon />
-        <div className="welcome__container-leftpanel-bottomhalf">
-          <form onSubmit={handleSubmit} noValidate className="form__container">
-            <h2 className="form__container-title">Welcome back</h2>
-            <label htmlFor="email" className="form__container-label">
-              Email
-              <span className="required">*</span>
-              <div>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="name@domain.com"
-                  value={values.email}
-                  onChange={handleChange}
-                  className="form__container-input"
-                />
-              </div>
-              {errors.email && <p className="error">{errors.email}</p>}
-            </label>
-            <label htmlFor="password" className="form__container-label">
-              Password
-              <span className="required">*</span>
-              <div>
-                <input
-                  id="password"
-                  type={PasswordInputType}
-                  name="password"
-                  placeholder="at least 8 characters"
-                  value={values.password}
-                  onChange={handleChange}
-                  className="form__container-input"
-                />
-                <span className="password-toggle-icon">{ToggleIcon}</span>
-              </div>
-              {errors.password && <p className="error">{errors.password}</p>}
-            </label>
-            <span className="welcome__container-leftpanel-bottomhalf-buttons">
-              <SignButton type="submit" value="signin">
-                Sign in
-              </SignButton>
-              <SignButtonDivider />
-              <SignButton type="button" value="signup">
-                Sign up
-              </SignButton>
-            </span>
-          </form>
+    <>
+      {/* {toHome ? <Redirect to="/dashboard" /> : null} */}
+      <div className="welcome__container">
+        <div className="welcome__container-leftpanel">
+          <WelcomeTopIcon />
+          <div className="welcome__container-leftpanel-bottomhalf">
+            <form
+              onSubmit={handleSubmit}
+              noValidate
+              className="form__container"
+            >
+              <h2 className="form__container-title">Welcome back</h2>
+              <label htmlFor="email" className="form__container-label">
+                Email
+                <span className="required">*</span>
+                <div>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="name@domain.com"
+                    value={values.email}
+                    onChange={handleChange}
+                    className="form__container-input"
+                  />
+                </div>
+                {errors.email && <p className="error">{errors.email}</p>}
+              </label>
+              <label htmlFor="password" className="form__container-label">
+                Password
+                <span className="required">*</span>
+                <div>
+                  <input
+                    id="password"
+                    type={PasswordInputType}
+                    name="password"
+                    placeholder="at least 8 characters"
+                    value={values.password}
+                    onChange={handleChange}
+                    className="form__container-input"
+                  />
+                  <span className="password-toggle-icon">{ToggleIcon}</span>
+                </div>
+                {errors.password && <p className="error">{errors.password}</p>}
+              </label>
+              <span className="welcome__container-leftpanel-bottomhalf-buttons">
+                <SignButton type="submit" value="signin">
+                  Sign in
+                </SignButton>
+                <SignButtonDivider />
+                <SignButton type="button" value="signup">
+                  Sign up
+                </SignButton>
+              </span>
+            </form>
+          </div>
         </div>
+        <div className="welcome__container-rightpanel" />
       </div>
-      <div className="welcome__container-rightpanel" />
-    </div>
+    </>
   );
 };
 

@@ -1,8 +1,7 @@
 import {
-  AUTH_SUCCESS,
-  AUTH_FAIL,
-  // SIGNIN_SUCCESS,
-  // SIGNIN_FAIL,
+  SIGNUP_SUCCESS,
+  SIGNIN_SUCCESS,
+  AUTH_FORM_FAIL,
   SIGNOUT_SUCCESS,
   USER_LOADING,
   USER_LOADED,
@@ -18,7 +17,15 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_SUCCESS:
+    case SIGNUP_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: false,
+        isLoading: false,
+        token: action.payload.token,
+      };
+    case SIGNIN_SUCCESS:
       console.log('here is the token', action.payload.token);
       localStorage.setItem('token', action.payload.token);
       return {
@@ -26,8 +33,7 @@ const auth = (state = initialState, action) => {
         ...action.payload,
         isAuthenticated: true,
         isLoading: false,
-        // token: action.payload.token,
-        // user: action.payload.data.user,
+        token: action.payload.token,
       };
     case SIGNOUT_SUCCESS:
       localStorage.clear();
@@ -52,7 +58,7 @@ const auth = (state = initialState, action) => {
         user: action.payload,
       };
     case AUTH_ERROR:
-    case AUTH_FAIL:
+    case AUTH_FORM_FAIL:
       localStorage.removeItem('token');
       return {
         ...state,
