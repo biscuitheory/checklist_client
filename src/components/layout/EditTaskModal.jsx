@@ -3,10 +3,12 @@ import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import ReactDOM from 'react-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faTimes, faPenNib } from '@fortawesome/free-solid-svg-icons';
 
-const EditTaskModal = forwardRef(({ children }, ref) => {
+import EditTask from '../EditTask';
+
+const EditTaskModal = forwardRef(({ task }, ref) => {
+  console.log('test getState', task);
   const [display, setDisplay] = useState(false);
 
   useImperativeHandle(ref, () => {
@@ -47,33 +49,7 @@ const EditTaskModal = forwardRef(({ children }, ref) => {
               />
             </span>
           </div>
-          <div className="edittask-modal-box-body">
-            <label htmlFor="name">
-              Task name:
-              <input type="text" id="name" />
-            </label>
-            <label htmlFor="description">
-              Task description:
-              <textarea
-                type="text"
-                id="description"
-                className="edittask-modal-box-body-form-box"
-              />
-            </label>
-            <button type="submit" className="edit-items-buttons">
-              <p>Update the task</p>
-            </button>
-          </div>
-          <div className="edittask-modal-box-body-delete">
-            <span className="edittask-modal-box-body-delete-title">
-              <FontAwesomeIcon icon={faTrashAlt} />
-              <h3>Delete Task</h3>
-            </span>
-            <p>Or do you really want to delete the task permanently?</p>
-            <button type="submit" className="delete-item-button">
-              <p>Delete the list</p>
-            </button>
-          </div>
+          <EditTask tasks={task.task} />
         </div>
       </div>,
       document.getElementById('modal-root')

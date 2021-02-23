@@ -24,7 +24,7 @@ const Task = (Tasks) => {
           onClick={openModal}
           className="dashboard__container-lists-list-card-header-edit"
         />
-        <EditTaskModal ref={modalRef} />
+        <EditTaskModal ref={modalRef} task={Tasks} />
       </div>
       <div className="dashboard__container-lists-list-card-description">
         <p>{Tasks.task.description}</p>

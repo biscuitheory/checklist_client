@@ -47,3 +47,23 @@ export const addTask = (data) => async (dispatch, getState) => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
+
+// EDIT TASK
+export const editTask = (data) => async (dispatch, getState) => {
+  console.log('taskskssks', data);
+  // Request Body
+  const body = JSON.stringify(data);
+  console.log('data from editlist into body', body);
+  axios
+    .patch(`${API}tasks`, body, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: EDIT_TASK,
+        payload: res.data,
+      });
+      dispatch(createMessage({ addList: 'Task Updated' }));
+    })
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};

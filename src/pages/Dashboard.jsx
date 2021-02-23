@@ -22,6 +22,7 @@ const Dashboard = ({ getListsTasks, getTasks, auth, lists, tasks }) => {
 
   useEffect(() => {
     getListsTasks(auth.user.id);
+    getTasks();
   }, []);
 
   return (
