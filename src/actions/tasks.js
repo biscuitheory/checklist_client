@@ -30,10 +30,9 @@ export const getTasks = () => async (dispatch, getState) => {
 
 // ADD TASK
 export const addTask = (data) => async (dispatch, getState) => {
-  console.log('taskskssks', data);
   // Request Body
   const body = JSON.stringify(data);
-  console.log('data from addlist into body', body);
+
   axios
     .post(`${API}tasks`, body, tokenConfig(getState))
     .then((res) => {
@@ -50,10 +49,9 @@ export const addTask = (data) => async (dispatch, getState) => {
 
 // EDIT TASK
 export const editTask = (data) => async (dispatch, getState) => {
-  console.log('taskskssks', data);
   // Request Body
   const body = JSON.stringify(data);
-  console.log('data from editlist into body', body);
+
   axios
     .patch(`${API}tasks`, body, tokenConfig(getState))
     .then((res) => {

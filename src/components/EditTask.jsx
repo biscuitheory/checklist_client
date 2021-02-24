@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-constant-condition */
+/* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
@@ -10,12 +11,16 @@ import useForm from './customedhooks/useForm';
 import validate from './validators/validateEditTask';
 import { editTask } from '../actions/tasks';
 
-const EditTask = ({ children, listId, tasks, auth, messages }) => {
+const EditTask = ({ tasks, auth, editTask, messages }) => {
+  console.log('user', auth);
+  console.log('lissst', tasks.list_id);
   console.log('taesks', tasks.name);
   const initialState = {
+    id: '' ? '' : tasks.id,
     name: '' ? '' : tasks.name,
     description: '' ? '' : tasks.description,
     priority_id: '' ? '' : tasks.priority_id,
+    list_id: '' ? '' : tasks.list_id,
   };
 
   const { handleChange, handleSubmit, values, errors } = useForm(
@@ -27,10 +32,11 @@ const EditTask = ({ children, listId, tasks, auth, messages }) => {
   async function submit() {
     editTask({
       user_id: auth.user.id,
+      id: tasks.id,
       name: values.name,
       description: values.description,
       priority_id: values.priority_id,
-      list_id: listId,
+      list_id: tasks.list_id,
     });
   }
 
@@ -73,7 +79,7 @@ const EditTask = ({ children, listId, tasks, auth, messages }) => {
             onChange={handleChange}
             value={values.priority_id || ''}
           />
-          {errors.priority && <p className="error">{errors.priority}</p>}
+          {errors.priority_id && <p className="error">{errors.priority_id}</p>}
         </label>
         <button type="submit" value="editTask" className="edit-items-buttons">
           <p>Update the task</p>

@@ -15,10 +15,9 @@ export default function validateAddTask(values) {
       'Veuillez utiliser des caractères valides pour saisir la description de liste.';
   }
 
-  // if (typeof values.priority !== 'number') {
-  //   errors.priority =
-  //     'Veuillez utiliser des caractères valides pour saisir la priority de liste.';
-  // }
-
+  if (typeof values.priority_id !== 'number') {
+    errors.priority_id =
+      'Veuillez utiliser des caractères valides pour saisir la priority de liste.';
+  }
   return errors;
 }
