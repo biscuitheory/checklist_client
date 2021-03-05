@@ -33,7 +33,7 @@ const tasks = (state = initialState, action) => {
     case DELETE_TASK:
       return {
         ...state,
-        tasks: state.tasks.filter((task) => task.id) !== action.payload,
+        tasks: state.tasks.filter((task) => task.id !== action.payload),
         errors: {},
       };
     case CLEAR_TASKS:

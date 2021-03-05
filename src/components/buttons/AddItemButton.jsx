@@ -55,7 +55,7 @@ const AddItemButton = ({
     name: '',
   };
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
+  const { handleChange, handleSubmit, values, errors, clearState } = useForm(
     initialState,
     validate,
     submit
@@ -65,7 +65,7 @@ const AddItemButton = ({
 
   async function submit() {
     {
-      text === 'list'
+      (text === 'list'
         ? addList({ user_id: auth.user.id, name: values.name })
         : addTask({
             user_id: auth.user.id,
@@ -73,13 +73,14 @@ const AddItemButton = ({
             description: 'Description à compléter',
             priority_id: 3,
             list_id: listId,
-          });
+          })
+      ).then(clearState);
     }
   }
 
-  function refreshPage() {
-    window.location.reload();
-  }
+  // function refreshPage() {
+  //   window.location.reload();
+  // }
 
   return (
     <div
@@ -103,7 +104,7 @@ const AddItemButton = ({
               className="add-item-container-form-input"
               onChange={handleChange}
               // onBlur={close}
-              value={values.name}
+              value={values.name || ''}
               name="name"
               id="id"
               type="text"
@@ -114,7 +115,7 @@ const AddItemButton = ({
               // value="addList"
               value={valueButton}
               className="add-item-form-button"
-              onClick={() => refreshPage()}
+              // onClick={() => refreshPage()}
             >
               {buttonTitle}
             </button>

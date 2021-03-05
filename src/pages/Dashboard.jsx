@@ -1,10 +1,11 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-constant-condition */
+/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 
 import { connect } from 'react-redux';
 
-import { getListsTasks } from '../actions/lists';
+import { getLists, getListsTasks } from '../actions/lists';
 import { getTasks } from '../actions/tasks';
 
 // import useForm from '../components/customedhooks/useForm';
@@ -14,13 +15,22 @@ import List from '../components/layout/List';
 import Navbar from '../components/layout/Navbar';
 import AddItemButton from '../components/buttons/AddItemButton';
 
-const Dashboard = ({ getListsTasks, getTasks, auth, lists, tasks }) => {
+const Dashboard = ({
+  getLists,
+  getListsTasks,
+  getTasks,
+  auth,
+  onlyLists,
+  lists,
+  tasks,
+}) => {
   console.log('authenticated user', auth.user.id);
   console.log('tasks top', tasks);
   console.log('lists top', lists);
   // console.log('tasks', tasks);
 
   useEffect(() => {
+    getLists(auth.user.id);
     getListsTasks(auth.user.id);
     getTasks();
   }, []);
@@ -151,6 +161,9 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   // tasks: state.tasks.tasks,
   lists: state.lists.lists,
+  onlyLists: state.lists.onlyLists,
 });
 
-export default connect(mapStateToProps, { getListsTasks, getTasks })(Dashboard);
+export default connect(mapStateToProps, { getLists, getListsTasks, getTasks })(
+  Dashboard
+);

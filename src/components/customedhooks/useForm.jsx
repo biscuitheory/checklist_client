@@ -5,6 +5,10 @@ const useForm = (initialState, validate, callback) => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const clearState = () => {
+    setValues({ ...initialState });
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -35,6 +39,7 @@ const useForm = (initialState, validate, callback) => {
     values,
     setValues,
     errors,
+    clearState,
   };
 };
 

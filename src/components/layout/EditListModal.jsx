@@ -10,11 +10,9 @@ import ReactDOM from 'react-dom';
 import EditList from '../EditList';
 // import { deleteList } from '../../actions/lists';
 
-const EditListModal = forwardRef(({ children }, ref) => {
-  // console.log('these are the lists id', listId);
+const EditListModal = forwardRef(({ listId }, ref) => {
+  console.log('pouuit', listId);
   const [display, setDisplay] = useState(false);
-
-  // const history = useHistory();
 
   useImperativeHandle(ref, () => {
     return {
@@ -31,10 +29,6 @@ const EditListModal = forwardRef(({ children }, ref) => {
     setDisplay(false);
   };
 
-  // async function submit() {
-  //   deleteList(listId, history);
-  // }
-
   // if () {
   //   return <Redirect to="/dashboard" />;
   // }
@@ -47,7 +41,7 @@ const EditListModal = forwardRef(({ children }, ref) => {
           role="presentation"
           className="editlist-modal-backdrop"
         />
-        <EditList />
+        <EditList listId={listId} />
       </div>,
       document.getElementById('modal-root')
     );

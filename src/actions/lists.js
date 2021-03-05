@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import axios from 'axios';
 import { createMessage, returnErrors } from './messages';
 import { tokenConfig } from './auth';
@@ -15,9 +16,9 @@ import {
 const API = process.env.REACT_APP_DEV_API_URL;
 
 // GET ALL THE LISTS OF AN USER
-export const getLists = () => async (dispatch, getState) => {
+export const getLists = (userId) => async (dispatch, getState) => {
   axios
-    .get(`${API}lists`, tokenConfig(getState))
+    .post(`${API}onlylists`, { user_id: userId }, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: GET_LISTS,
@@ -49,69 +50,82 @@ export const getListsTasks = (userId) => async (dispatch, getState) => {
 };
 
 // ADD LIST
-export const addList = (data) => async (dispatch, getState) => {
-  console.log('data from addlist form', data);
+export const addList = (list) => async (dispatch, getState) => {
+  console.log('data from addlist form', list);
+
+  // const { user_id, name, Tasks } = list;
+
+  // console.log('userId', Tasks);
 
   // Request Body
-  const body = JSON.stringify(data);
+  const body = JSON.stringify(list);
   console.log('data from addlist into body', body);
 
-  axios
+  return axios
     .post(`${API}lists`, body, tokenConfig(getState))
     .then((res) => {
+      console.log('dispatch addList', res.data);
+      const newList = { ...res.data, Tasks: [] };
+      // console.log('tututut', newList);
+      dispatch(createMessage({ addList: 'List Added' }));
       dispatch({
         type: ADD_LIST,
-        payload: res.data,
+        payload: newList,
       });
-      dispatch(createMessage({ addList: 'List Added' }));
     })
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
 };
 
 // EDIT LIST
-export const editList = (listData) => async (dispatch) => {
-  console.log('data list from edit list form', listData);
-
-  // Headers
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+export const editList = (list) => (dispatch, getState) => {
+  console.log('data list from edit list form', list);
 
   // Request Body
-  const body = JSON.stringify(listData);
+  const body = JSON.stringify(list);
   console.log('data from edit list form into body', body);
 
   axios
-    .patch(`${API}lists`, body, config)
+    .patch(`${API}lists`, body, tokenConfig(getState))
     .then((res) => {
+      console.log('dispatch editList', res.data);
+      const editedList = { ...res.data, Tasks: [] };
+      console.log('tututut', editedList);
+      dispatch(createMessage({ editList: 'List Updated' }));
       dispatch({
         type: EDIT_LIST,
-        payload: res.data,
+        payload: editedList,
       });
-      console.log('le nom de la liste est éditée !');
     })
     .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
+      // dispatch(returnErrors(err.response.data, err.response.status))
+      console.log('editList', err)
     );
 };
 
 // DELETE LIST
-export const deleteList = (id, history) => async (dispatch, getState) => {
-  console.log('rdv des lists id', id);
+export const deleteList = (id) => (dispatch, getState) => {
+  const { token } = getState().auth;
+  console.log('rdv de la list id', id);
+
   axios
-    .delete(`${API}lists`, id, tokenConfig(getState))
+    .delete(`${API}lists`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: { id },
+    })
     .then((res) => {
+      console.log('dispatch deleteList', res.data);
+      dispatch(createMessage({ deleteList: 'List Deleted' }));
       dispatch({
         type: DELETE_LIST,
         payload: id,
       });
-      history.push('/dashboard');
     })
     .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
+      // dispatch(returnErrors(err.response.data, err.response.status))
+      console.log('deleteList', err)
     );
 };

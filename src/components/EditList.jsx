@@ -1,7 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-shadow */
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,17 +8,15 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { deleteList } from '../actions/lists';
 
 const EditListModal = ({ deleteList, listId }) => {
-  console.log('these are the lists id', listId);
+  console.log('tatayuyu', listId);
 
-  const history = useHistory();
+  // const history = useHistory();
 
   async function submit() {
-    deleteList(listId, history);
+    // deleteList(listId, history);
+    deleteList(listId);
   }
 
-  // if () {
-  //   return <Redirect to="/dashboard" />;
-  // }
   return (
     <>
       <div className="editlist-modal-box">
@@ -34,7 +31,7 @@ const EditListModal = ({ deleteList, listId }) => {
 };
 
 const mapStateToProps = (state) => ({
-  lists: state.lists,
+  lists: state.lists.lists,
 });
 
 export default connect(mapStateToProps, { deleteList })(EditListModal);

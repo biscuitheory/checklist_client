@@ -10,6 +10,7 @@ import {
 
 const initialState = {
   lists: [],
+  // onlyLists: [],
   isLoading: false,
   errors: {},
 };
@@ -19,7 +20,7 @@ const lists = (state = initialState, action) => {
     case GET_LISTS:
       return {
         ...state,
-        lists: action.payload,
+        onlyLists: action.payload,
         isLoading: false,
         errors: {},
       };
@@ -27,21 +28,35 @@ const lists = (state = initialState, action) => {
       return {
         ...state,
         lists: action.payload,
+        // onlyLists: action.payload,
         isLoading: false,
         errors: {},
       };
     case ADD_LIST:
     case EDIT_LIST:
+      console.log('kebab', state.onlyLists);
+      console.log('falafel', action.payload);
+      console.log('wakanda', {
+        lists: [
+          ...state.lists.filter((list) => list.id !== action.payload.id),
+          action.payload,
+        ],
+      });
       return {
         ...state,
         lists: [...state.lists, action.payload],
+        // lists: [
+        //   ...state.lists.filter((list) => list.id !== action.payload.id),
+        //   action.payload,
+        // ],
         isLoading: false,
         errors: {},
       };
     case DELETE_LIST:
+      console.log('object', state.lists);
       return {
         ...state,
-        lists: state.lists.filter((list) => list.id) !== action.payload,
+        lists: state.lists.filter((list) => list.id !== action.payload),
         errors: {},
       };
     case CLEAR_LISTS:
