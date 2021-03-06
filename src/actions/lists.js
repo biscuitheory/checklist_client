@@ -51,7 +51,7 @@ export const getListsTasks = (userId) => async (dispatch, getState) => {
 
 // ADD LIST
 export const addList = (list) => async (dispatch, getState) => {
-  console.log('data from addlist form', list);
+  // console.log('data from addlist form', list);
 
   // const { user_id, name, Tasks } = list;
 
@@ -59,12 +59,12 @@ export const addList = (list) => async (dispatch, getState) => {
 
   // Request Body
   const body = JSON.stringify(list);
-  console.log('data from addlist into body', body);
+  // console.log('data from addlist into body', body);
 
   return axios
     .post(`${API}lists`, body, tokenConfig(getState))
     .then((res) => {
-      console.log('dispatch addList', res.data);
+      // console.log('dispatch addList', res.data);
       const newList = { ...res.data, Tasks: [] };
       // console.log('tututut', newList);
       dispatch(createMessage({ addList: 'List Added' }));

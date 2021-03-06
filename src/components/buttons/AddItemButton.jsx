@@ -13,6 +13,7 @@ import { addTask } from '../../actions/tasks';
 
 const AddItemButton = ({
   listId,
+  list,
   text,
   children,
   addList,
@@ -67,13 +68,16 @@ const AddItemButton = ({
     {
       (text === 'list'
         ? addList({ user_id: auth.user.id, name: values.name })
-        : addTask({
-            user_id: auth.user.id,
-            name: values.name,
-            description: 'Description à compléter',
-            priority_id: 3,
-            list_id: listId,
-          })
+        : addTask(
+            {
+              user_id: auth.user.id,
+              name: values.name,
+              description: 'Description à compléter',
+              priority_id: 3,
+              list_id: listId,
+            },
+            list
+          )
       ).then(clearState);
     }
   }

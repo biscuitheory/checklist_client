@@ -111,7 +111,8 @@ const List = ({ auth, list, onlyLists, editList, getListsTasks }) => {
         {list.Tasks.map((task) => (
           <Task key={task.id} task={task} />
         ))}
-        <AddItemButton text="task" listId={id}>
+        {/* <AddItemButton text="task" listId={id}> */}
+        <AddItemButton text="task" listId={id} list={list}>
           task
         </AddItemButton>
         {/* <AddTaskButton text="task" listId={list.id}>

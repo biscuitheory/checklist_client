@@ -24,6 +24,8 @@ const tasks = (state = initialState, action) => {
       };
     case ADD_TASK:
     case EDIT_TASK:
+      console.log('falafel', action.payload);
+
       return {
         ...state,
         tasks: [...state.tasks, action.payload],
