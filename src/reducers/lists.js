@@ -3,6 +3,7 @@ import {
   GET_LISTSTASKS,
   ADD_LIST,
   EDIT_LIST,
+  EDIT_LIST_TASK,
   DELETE_LIST,
   DELETE_LIST_TASK,
   CLEAR_LISTS,
@@ -33,18 +34,17 @@ const lists = (state = initialState, action) => {
       };
     case ADD_LIST:
     case EDIT_LIST:
-      // console.log('kebab', action.payload.taskie);
-      console.log('falafel', action.payload);
-      // console.log('wakanda', {
+      console.log('addedit list action.payload', action.payload);
+      // console.log('addedit list action.payload', {
       //   lists: [
       //     ...state.lists.filter((list) => list.id !== action.payload.id),
       //     action.payload,
       //   ],
       // });
-      // console.log('wakanda', {
+      // console.log('addedit list action.payload', {
       //   lists: [...action.payload.list, action.payload.Tasks],
       // });
-      // console.log('wakanda', {
+      // console.log('addedit list action.payload', {
       //   lists: [...state.lists, action.payload],
       // });
       return {
@@ -57,45 +57,32 @@ const lists = (state = initialState, action) => {
         isLoading: false,
         errors: {},
       };
+    case EDIT_LIST_TASK:
+      console.log('edit task action.payload', action.payload);
+      return {
+        ...state,
+        lists: [
+          ...state.lists.filter((list) => list.id !== action.payload.id),
+          action.payload,
+        ],
+        isLoading: false,
+        errors: {},
+      };
     case DELETE_LIST:
-      // console.log('object', state.lists);
-      console.log('falafel', action.payload);
-      console.log('wakanda', {
-        lists: state.lists.filter((list) => list.id !== action.payload),
-      });
+      console.log('delete list action.payload', action.payload);
       return {
         ...state,
         lists: state.lists.filter((list) => list.id !== action.payload),
         errors: {},
       };
     case DELETE_LIST_TASK:
-      // console.log('object', state.lists);
-      console.log('falafel', action.payload);
-      console.log('wakanda', {
-        // lists: state.lists.map(
-        //   (list) =>
-        //     list.Tasks.filter((task) => task.id !== action.payload.task.id),
-        //   action.payload
-        // ),
-        // lists: state.lists.filter((list) => list.id !== action.payload),
-        // lists: state.lists.filter((list) =>
-        //   list.Tasks.map((task) => task.id !== action.payload)
-        // ),
-        lists: state.lists.filter((list) =>
-          list.Tasks.map((task) => task.id !== action.payload)
-        ),
-      });
+      console.log('delete task action.payload', action.payload);
       return {
         ...state,
-        // tasks: state.tasks.filter((task) => task.id !== action.payload),
-        // lists: state.lists.filter(
-        //   (list) =>
-        //     list.Tasks.some((task) => task.includes(action.payload.id)) !==
-        //     action.payload
-        // ),
-        lists: state.lists.filter((list) =>
-          list.Tasks.map((task) => task.id !== action.payload)
-        ),
+        lists: [
+          ...state.lists.filter((list) => list.id !== action.payload.id),
+          action.payload,
+        ],
         errors: {},
       };
     case CLEAR_LISTS:

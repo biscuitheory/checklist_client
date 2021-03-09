@@ -8,8 +8,8 @@ import {
   GET_TASKS,
   ADD_TASK,
   EDIT_TASK,
+  EDIT_LIST_TASK,
   DELETE_TASK,
-  DELETE_LIST,
   DELETE_LIST_TASK,
   CLEAR_TASKS,
   POST_ERROR,
@@ -32,27 +32,6 @@ export const getTasks = () => async (dispatch, getState) => {
     );
 };
 
-// ADD TASK
-// export const addTask = (task) => async (dispatch, getState) => {
-//   console.log('data from addtaskform', task);
-//   // Request Body
-//   const body = JSON.stringify(task);
-//   console.log('data from addtask into body', body);
-//   axios
-//     .post(`${API}tasks`, body, tokenConfig(getState))
-//     .then((res) => {
-//       console.log('dispatch addTask', res.data);
-//       // dispatch({
-//       //   type: ADD_TASK,
-//       //   payload: res.data,
-//       // });
-//       dispatch(createMessage({ addList: 'Task Added' }));
-//     })
-//     .catch((err) =>
-//       dispatch(returnErrors(err.response.data, err.response.status))
-//     );
-// };
-
 export const addTask = (task, list) => async (dispatch, getState) => {
   const { Tasks } = list;
   console.log('data from addtaskform', task);
@@ -64,24 +43,14 @@ export const addTask = (task, list) => async (dispatch, getState) => {
     .post(`${API}tasks`, body, tokenConfig(getState))
     .then((res) => {
       console.log('dispatch addTask', res.data);
-      // const taskie = {
-      //   Tasks: { ...Tasks.filter((task) => task.id !== res.data), ...res.data },
-      // };
-      // const taskie = {
-      //   Tasks: { ...Tasks.filter((task) => task.id !== res.data), ...res.data },
-      // };
-      const taskie = {
-        Tasks: [...Tasks, res.data],
-      };
-      const newTask = { ...list, taskie };
-      // const newTask = { list, Tasks: { ...res.data } };
+      const newTask = { ...list, Tasks: [...Tasks, res.data] };
       console.log('test newTask', newTask);
       dispatch({
         type: ADD_TASK,
         payload: res.data,
       });
       dispatch({
-        type: EDIT_LIST,
+        type: EDIT_LIST_TASK,
         payload: newTask,
       });
       dispatch(createMessage({ addList: 'Task Added' }));
@@ -102,10 +71,7 @@ export const editTask = (task, list) => async (dispatch, getState) => {
   axios
     .patch(`${API}tasks`, body, tokenConfig(getState))
     .then((res) => {
-      const taskie = {
-        Tasks: [...Tasks, res.data],
-      };
-      const updatedTask = { ...list, taskie };
+      const updatedTask = { ...list, Tasks: [...Tasks, res.data] };
       console.log('test updatedTask', updatedTask);
       dispatch({
         type: EDIT_TASK,
@@ -124,7 +90,7 @@ export const editTask = (task, list) => async (dispatch, getState) => {
 
 // DELETE TASK
 export const deleteTask = (id, task, list) => (dispatch, getState) => {
-  // const { Tasks } = list;
+  const { Tasks } = list;
   const { token } = getState().auth;
   console.log('rdv de la task id', id);
 
@@ -137,21 +103,16 @@ export const deleteTask = (id, task, list) => (dispatch, getState) => {
     })
     .then((res) => {
       console.log('dispatch deleteTask', res.data);
-      // const taskie = {
-      //   Tasks: [...Tasks, task],
-      // };
-      // const deletedTask = { ...list, taskie };
-      // console.log('lion king', deletedTask);
+      const deletedTask = { ...list, Tasks: [...Tasks], id };
       dispatch(createMessage({ deleteTask: 'Task Deleted' }));
       dispatch({
         type: DELETE_TASK,
         payload: id,
       });
-      // dispatch({
-      //   type: DELETE_LIST_TASK,
-      //   payload: id,
-      //   // payload: deletedTask,
-      // });
+      dispatch({
+        type: DELETE_LIST_TASK,
+        payload: deletedTask,
+      });
     })
     .catch((err) =>
       // dispatch(returnErrors(err.response.data, err.response.status))
