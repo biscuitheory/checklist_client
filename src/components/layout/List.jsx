@@ -18,7 +18,7 @@ import AddItemButton from '../buttons/AddItemButton';
 import EditListModal from './EditListModal';
 import Task from './Task';
 
-const List = ({ auth, list, onlyLists, editList, getListsTasks }) => {
+const List = ({ auth, list, editList, getListsTasks }) => {
   // const [toDash, setToDash] = useState(false);
   console.log('etetetetete', list);
   const { id, name, user_id } = list;
@@ -44,7 +44,7 @@ const List = ({ auth, list, onlyLists, editList, getListsTasks }) => {
     name: '' ? '' : name,
   };
 
-  const { handleChange, handleSubmit, values, setValues, errors } = useForm(
+  const { handleChange, handleSubmit, values, errors } = useForm(
     initialState,
     validate,
     submitEditList
@@ -109,7 +109,7 @@ const List = ({ auth, list, onlyLists, editList, getListsTasks }) => {
           <EditListModal ref={modalRef} listId={id} />
         </div>
         {list.Tasks.map((task) => (
-          <Task key={task.id} task={task} />
+          <Task key={task.id} task={task} list={list} />
         ))}
         {/* <AddItemButton text="task" listId={id}> */}
         <AddItemButton text="task" listId={id} list={list}>
@@ -127,7 +127,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   // tasks: state.tasks.tasks,
   lists: state.lists.lists,
-  onlyLists: state.lists.onlyLists,
+  // onlyLists: state.lists.onlyLists,
 });
 
 export default connect(mapStateToProps, { editList, getListsTasks })(List);

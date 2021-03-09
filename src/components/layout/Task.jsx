@@ -9,7 +9,7 @@ import EditTaskModal from './EditTaskModal';
 
 const Task = (Tasks) => {
   const modalRef = useRef();
-  console.log('ya quoi dans task', Tasks);
+  console.log('ya quoi dans Tasks', Tasks);
 
   const openModal = () => {
     modalRef.current.openModal();

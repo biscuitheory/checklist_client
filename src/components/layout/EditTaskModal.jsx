@@ -49,7 +49,7 @@ const EditTaskModal = forwardRef(({ task }, ref) => {
               />
             </span>
           </div>
-          <EditTask key={task.id} tasks={task.task} />
+          <EditTask key={task.id} tasks={task.task} list={task.list} />
         </div>
       </div>,
       document.getElementById('modal-root')

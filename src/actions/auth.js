@@ -35,6 +35,7 @@ export const loadUser = () => async (dispatch, getState) => {
 
 // SIGNUP USER
 export const signup = (userData, setToHome) => async (dispatch) => {
+  console.log('mystere', setToHome);
   console.log('data from signup form', userData);
   // Headers
   const config = {

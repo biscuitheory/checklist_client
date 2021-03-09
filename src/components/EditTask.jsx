@@ -9,11 +9,13 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 
 import useForm from './customedhooks/useForm';
 import validate from './validators/validateEditTask';
-import { editTask } from '../actions/tasks';
+import { editTask, deleteTask } from '../actions/tasks';
 
-const EditTask = ({ tasks, auth, editTask, messages }) => {
+const EditTask = ({ tasks, list, auth, editTask, deleteTask, messages }) => {
   console.log('user', auth);
-  console.log('lissst', tasks.list_id);
+  console.log('full list', list);
+  console.log('full tasks', tasks);
+  console.log('lissst id', tasks.list_id);
   console.log('taesks', tasks.name);
   const initialState = {
     id: '' ? '' : tasks.id,
@@ -30,14 +32,21 @@ const EditTask = ({ tasks, auth, editTask, messages }) => {
   );
 
   async function submit() {
-    editTask({
-      user_id: auth.user.id,
-      id: tasks.id,
-      name: values.name,
-      description: values.description,
-      priority_id: values.priority_id,
-      list_id: tasks.list_id,
-    });
+    editTask(
+      {
+        user_id: auth.user.id,
+        id: tasks.id,
+        name: values.name,
+        description: values.description,
+        priority_id: values.priority_id,
+        list_id: tasks.list_id,
+      },
+      list
+    );
+  }
+
+  async function submitDelete() {
+    deleteTask(tasks.id, tasks, list);
   }
 
   return (
@@ -73,7 +82,7 @@ const EditTask = ({ tasks, auth, editTask, messages }) => {
         <label htmlFor="priority">
           Priority:
           <input
-            type="number"
+            type="text"
             name="priority"
             id="priority"
             onChange={handleChange}
@@ -91,8 +100,12 @@ const EditTask = ({ tasks, auth, editTask, messages }) => {
           <h3>Delete Task</h3>
         </span>
         <p>Or do you really want to delete the task permanently?</p>
-        <button type="submit" className="delete-item-button">
-          <p>Delete the list</p>
+        <button
+          type="submit"
+          className="delete-item-button"
+          onClick={submitDelete}
+        >
+          <p>Delete the task</p>
         </button>
       </div>
     </>
@@ -104,4 +117,4 @@ const mapStateToProps = (state) => ({
   messages: state.messages.state,
 });
 
-export default connect(mapStateToProps, { editTask })(EditTask);
+export default connect(mapStateToProps, { editTask, deleteTask })(EditTask);

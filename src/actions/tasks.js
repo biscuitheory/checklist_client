@@ -9,6 +9,8 @@ import {
   ADD_TASK,
   EDIT_TASK,
   DELETE_TASK,
+  DELETE_LIST,
+  DELETE_LIST_TASK,
   CLEAR_TASKS,
   POST_ERROR,
 } from './types';
@@ -90,20 +92,69 @@ export const addTask = (task, list) => async (dispatch, getState) => {
 };
 
 // EDIT TASK
-export const editTask = (data) => async (dispatch, getState) => {
+export const editTask = (task, list) => async (dispatch, getState) => {
+  const { Tasks } = list;
+  console.log('task from edittaskform', task);
+  console.log('list from edittaskform', list);
   // Request Body
-  const body = JSON.stringify(data);
+  const body = JSON.stringify(task);
 
   axios
     .patch(`${API}tasks`, body, tokenConfig(getState))
     .then((res) => {
+      const taskie = {
+        Tasks: [...Tasks, res.data],
+      };
+      const updatedTask = { ...list, taskie };
+      console.log('test updatedTask', updatedTask);
       dispatch({
         type: EDIT_TASK,
         payload: res.data,
+      });
+      dispatch({
+        type: EDIT_LIST,
+        payload: updatedTask,
       });
       dispatch(createMessage({ addList: 'Task Updated' }));
     })
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+
+// DELETE TASK
+export const deleteTask = (id, task, list) => (dispatch, getState) => {
+  // const { Tasks } = list;
+  const { token } = getState().auth;
+  console.log('rdv de la task id', id);
+
+  axios
+    .delete(`${API}tasks`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: { id },
+    })
+    .then((res) => {
+      console.log('dispatch deleteTask', res.data);
+      // const taskie = {
+      //   Tasks: [...Tasks, task],
+      // };
+      // const deletedTask = { ...list, taskie };
+      // console.log('lion king', deletedTask);
+      dispatch(createMessage({ deleteTask: 'Task Deleted' }));
+      dispatch({
+        type: DELETE_TASK,
+        payload: id,
+      });
+      // dispatch({
+      //   type: DELETE_LIST_TASK,
+      //   payload: id,
+      //   // payload: deletedTask,
+      // });
+    })
+    .catch((err) =>
+      // dispatch(returnErrors(err.response.data, err.response.status))
+      console.log('deleteTask', err)
     );
 };

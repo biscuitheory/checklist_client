@@ -13,7 +13,6 @@ import SignButton from '../components/buttons/SignButton';
 import SignButtonDivider from '../components/buttons/SignButtonDivider';
 
 const Signin = ({ signin, auth: { isAuthenticated } }) => {
-  const [toHome, setToHome] = useState(false);
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
   const initialState = {

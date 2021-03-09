@@ -4,6 +4,7 @@ import {
   ADD_LIST,
   EDIT_LIST,
   DELETE_LIST,
+  DELETE_LIST_TASK,
   CLEAR_LISTS,
   POST_ERROR,
 } from '../actions/types';
@@ -57,10 +58,44 @@ const lists = (state = initialState, action) => {
         errors: {},
       };
     case DELETE_LIST:
-      console.log('object', state.lists);
+      // console.log('object', state.lists);
+      console.log('falafel', action.payload);
+      console.log('wakanda', {
+        lists: state.lists.filter((list) => list.id !== action.payload),
+      });
       return {
         ...state,
         lists: state.lists.filter((list) => list.id !== action.payload),
+        errors: {},
+      };
+    case DELETE_LIST_TASK:
+      // console.log('object', state.lists);
+      console.log('falafel', action.payload);
+      console.log('wakanda', {
+        // lists: state.lists.map(
+        //   (list) =>
+        //     list.Tasks.filter((task) => task.id !== action.payload.task.id),
+        //   action.payload
+        // ),
+        // lists: state.lists.filter((list) => list.id !== action.payload),
+        // lists: state.lists.filter((list) =>
+        //   list.Tasks.map((task) => task.id !== action.payload)
+        // ),
+        lists: state.lists.filter((list) =>
+          list.Tasks.map((task) => task.id !== action.payload)
+        ),
+      });
+      return {
+        ...state,
+        // tasks: state.tasks.filter((task) => task.id !== action.payload),
+        // lists: state.lists.filter(
+        //   (list) =>
+        //     list.Tasks.some((task) => task.includes(action.payload.id)) !==
+        //     action.payload
+        // ),
+        lists: state.lists.filter((list) =>
+          list.Tasks.map((task) => task.id !== action.payload)
+        ),
         errors: {},
       };
     case CLEAR_LISTS:
