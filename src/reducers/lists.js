@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import {
   GET_LISTS,
   GET_LISTSTASKS,
@@ -95,23 +96,77 @@ const lists = (state = initialState, action) => {
         errors: action.payload,
       };
     case DRAG_HAPPENED: {
+      console.log('action payload drag', action.payload);
       const {
         droppableIdStart,
         droppableIdEnd,
         droppableIndexStart,
         droppableIndexEnd,
+        draggableId,
         type,
       } = action.payload;
-      console.log('action payload drag', action.payload);
 
-      const newState = { ...state };
-
+      console.log('indexStart', droppableIndexStart);
+      // if (type === 'list') {
+      //   return state;
+      // }
       // dragging lists around
       if (type === 'list') {
-        const list = newState.lists.splice(droppableIndexStart, 1);
-        newState.lists.splice(droppableIndexEnd, 0, ...list);
-        return newState;
+        const list = state.lists.splice(droppableIndexStart, 1);
+        state.lists.splice(droppableIndexEnd, 0, ...list);
+        console.log(
+          'lili',
+          ...state.lists.splice(droppableIndexEnd, 0, ...list)
+        );
+        return {
+          ...state,
+          // lists: [...state.lists.splice(droppableIndexEnd, 0, ...list)],
+          lists: state.lists,
+          isLoading: false,
+          errors: {},
+        };
       }
+
+      if (droppableIdStart === droppableIdEnd) {
+        const list = state[droppableIdStart];
+        // const task = list.Tasks.splice(droppableIndexStart, 1);
+        // list.Tasks.splice(droppableIndexEnd, 0, ...task);
+        return { ...state, [droppableIdStart]: list };
+      }
+
+      // other list
+      if (droppableIdStart !== droppableIdEnd) {
+        // find the list where the drag happened
+        const listStart = state[droppableIdStart];
+        // pull out the card from this list
+        // const task = listStart.tasks.splice(droppableIndexStart, 1);
+        const listEnd = state[droppableIdEnd];
+
+        // put the card in the new list
+        // listEnd.tasks.splice(droppableIndexEnd, 0, ...task);
+        return {
+          ...state,
+          [droppableIdStart]: listStart,
+          [droppableIdEnd]: listEnd,
+        };
+      }
+      // const newState = { ...state };
+
+      // // dragging lists around
+      // if (type === 'list') {
+      //   const list = newState.lists.splice(droppableIndexStart, 1);
+      //   newState.lists.splice(droppableIndexEnd, 0, ...list);
+      //   return newState;
+      // }
+
+      // // same list
+      // if (droppableIdStart === droppableIdEnd) {
+      //   const list = newState.lists.find(
+      //     (list) => droppableIdStart === list.id
+      //   );
+      //   const task = list.Tasks.splice(droppableIndexStart, 1);
+      //   list.tasks.splice(droppableIndexEnd, 0, ...task);
+      // }
 
       // // in the same list
       // if (droppableIdStart === droppableIdEnd) {
@@ -138,7 +193,7 @@ const lists = (state = initialState, action) => {
       //     [droppableIdEnd]: listEnd,
       //   };
       // }
-      return newState;
+      return state;
 
       // const newState = [...state];
 

@@ -62,7 +62,7 @@ export const addList = (list) => async (dispatch, getState) => {
   const body = JSON.stringify(list);
   // console.log('data from addlist into body', body);
 
-  return axios
+  axios
     .post(`${API}lists`, body, tokenConfig(getState))
     .then((res) => {
       // console.log('dispatch addList', res.data);
@@ -131,21 +131,16 @@ export const deleteList = (id) => (dispatch, getState) => {
     );
 };
 
-export const sort = (
-  droppableIdStart,
-  droppableIdEnd,
-  droppableIndexStart,
-  droppableIndexEnd,
-  draggableId,
-  type
-) => {
-  console.log('sort droppableIdStart', droppableIdStart);
-  console.log('sort droppableIdEnd', droppableIdEnd);
-  console.log('sort droppableIndexStart', droppableIndexStart);
-  console.log('sort droppableIndexEnd', droppableIndexEnd);
-  console.log('sort draggableId', draggableId);
-  console.log('sort type', type);
-  return {
+export const sortList = (data) => (dispatch) => {
+  const {
+    droppableIdStart,
+    droppableIdEnd,
+    droppableIndexStart,
+    droppableIndexEnd,
+    draggableId,
+    type,
+  } = data;
+  dispatch({
     type: DRAG_HAPPENED,
     payload: {
       droppableIdStart,
@@ -155,5 +150,5 @@ export const sort = (
       draggableId,
       type,
     },
-  };
+  });
 };

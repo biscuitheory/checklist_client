@@ -9,7 +9,7 @@ import { faPenNib } from '@fortawesome/free-solid-svg-icons';
 import EditTaskModal from './EditTaskModal';
 
 const Task = (Tasks) => {
-  console.log('cest quoi index', Tasks.index);
+  // console.log('cest quoi index', Tasks.index);
   const modalRef = useRef();
   console.log('ya quoi dans Tasks', Tasks);
 

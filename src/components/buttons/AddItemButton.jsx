@@ -23,7 +23,7 @@ const AddItemButton = ({
 }) => {
   const [formOpen, setFormOpen] = useState(false);
 
-  console.log('eeasy', messages);
+  // console.log('eeasy', messages);
 
   const open = () => {
     setFormOpen(true);
@@ -81,10 +81,6 @@ const AddItemButton = ({
       ).then(clearState);
     }
   }
-
-  // function refreshPage() {
-  //   window.location.reload();
-  // }
 
   return (
     <div

@@ -22,7 +22,7 @@ const AddTaskButton = ({
   messages,
 }) => {
   const [formOpen, setFormOpen] = useState(false);
-  console.log('eeasy', messages);
+  // console.log('eeasy', messages);
 
   const open = () => {
     setFormOpen(true);

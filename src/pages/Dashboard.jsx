@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import { getLists, getListsTasks, sort } from '../actions/lists';
+import { getLists, getListsTasks, sortList } from '../actions/lists';
 import { getTasks } from '../actions/tasks';
 
 // import useForm from '../components/customedhooks/useForm';
@@ -18,6 +18,7 @@ import AddItemButton from '../components/buttons/AddItemButton';
 const Dashboard = ({
   getLists,
   getListsTasks,
+  sortList,
   getTasks,
   auth,
   onlyLists,
@@ -49,18 +50,16 @@ const Dashboard = ({
     const droppableIdEnd = destination.droppableId;
     const droppableIndexStart = source.index;
     const droppableIndexEnd = destination.index;
-
-    // console.log('cest quoi sort', sort());
     // console.log('droppableIdEnd', droppableIdEnd);
     // move list
-    sort(
+    sortList({
       droppableIdStart,
       droppableIdEnd,
       droppableIndexStart,
       droppableIndexEnd,
       draggableId,
-      type
-    );
+      type,
+    });
 
     // sort(
     //   source.droppableId,
@@ -224,5 +223,5 @@ export default connect(mapStateToProps, {
   getLists,
   getListsTasks,
   getTasks,
-  sort,
+  sortList,
 })(Dashboard);
