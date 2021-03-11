@@ -2,10 +2,10 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
-
 import { connect } from 'react-redux';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import { getLists, getListsTasks } from '../actions/lists';
+import { getLists, getListsTasks, sort } from '../actions/lists';
 import { getTasks } from '../actions/tasks';
 
 // import useForm from '../components/customedhooks/useForm';
@@ -24,10 +24,53 @@ const Dashboard = ({
   lists,
   tasks,
 }) => {
-  console.log('authenticated user', auth.user.id);
-  console.log('tasks top', tasks);
-  console.log('lists top', lists);
-  // console.log('tasks', tasks);
+  // console.log('authenticated user', auth.user.id);
+  // console.log('tasks from dashboard', tasks);
+  // console.log('lists from dashboard', lists);
+
+  async function onDragEnd(result) {
+    const { destination, source, draggableId, type } = result;
+
+    console.log('result jean pierre', result);
+
+    if (!destination) {
+      console.log('not dropped in droppable');
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      console.log('dropped in the same place');
+      return;
+    }
+    const droppableIdStart = source.droppableId;
+    const droppableIdEnd = destination.droppableId;
+    const droppableIndexStart = source.index;
+    const droppableIndexEnd = destination.index;
+
+    // console.log('cest quoi sort', sort());
+    // console.log('droppableIdEnd', droppableIdEnd);
+    // move list
+    sort(
+      droppableIdStart,
+      droppableIdEnd,
+      droppableIndexStart,
+      droppableIndexEnd,
+      draggableId,
+      type
+    );
+
+    // sort(
+    //   source.droppableId,
+    //   destination.droppableId,
+    //   source.index,
+    //   destination.index,
+    //   draggableId,
+    //   type
+    // );
+  }
 
   useEffect(() => {
     getLists(auth.user.id);
@@ -38,23 +81,36 @@ const Dashboard = ({
   return (
     <>
       <Navbar />
-      <div className="dashboard__container">
-        <h2>
-          {auth.user.firstname}
-          &apos;s Board
-        </h2>
-        <div className="dashboard__container-lists">
-          {lists.map((list) => (
-            <List key={list.id} list={list} />
-          ))}
-          <div className="dashboard__container-lists-addlist-inside">
-            <AddItemButton text="list">list</AddItemButton>
-          </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="dashboard__container">
+          <h2>
+            {auth.user.firstname}
+            &apos;s Board
+          </h2>
+          <Droppable droppableId="all-lists" direction="horizontal" type="list">
+            {(provided) => (
+              <>
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="dashboard__container-lists"
+                >
+                  {lists.map((list, index) => (
+                    <List key={list.id} list={list} index={index} />
+                  ))}
+                  {provided.placeholder}
+                  <div className="dashboard__container-lists-addlist-inside">
+                    <AddItemButton text="list">list</AddItemButton>
+                  </div>
+                </div>
+                <div className="dashboard__container-lists-addlist-outside">
+                  <AddItemButton text="list">list</AddItemButton>
+                </div>
+              </>
+            )}
+          </Droppable>
         </div>
-        <div className="dashboard__container-lists-addlist-outside">
-          <AddItemButton text="list">list</AddItemButton>
-        </div>
-      </div>
+      </DragDropContext>
     </>
   );
 };
@@ -164,6 +220,9 @@ const mapStateToProps = (state) => ({
   onlyLists: state.lists.onlyLists,
 });
 
-export default connect(mapStateToProps, { getLists, getListsTasks, getTasks })(
-  Dashboard
-);
+export default connect(mapStateToProps, {
+  getLists,
+  getListsTasks,
+  getTasks,
+  sort,
+})(Dashboard);

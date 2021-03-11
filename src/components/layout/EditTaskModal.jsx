@@ -8,7 +8,7 @@ import { faTimes, faPenNib } from '@fortawesome/free-solid-svg-icons';
 import EditTask from '../EditTask';
 
 const EditTaskModal = forwardRef(({ task }, ref) => {
-  console.log('test getState', task);
+  // console.log('test getState', task);
   const [display, setDisplay] = useState(false);
 
   useImperativeHandle(ref, () => {

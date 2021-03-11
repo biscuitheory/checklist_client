@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
-// import { useDispatch } from 'react-redux';
-// import axios from 'axios';
-// import PropTypes from 'prop-types';
+
 import { Provider } from 'react-redux';
 import store from './store';
 // import { auth } from './actions/index';

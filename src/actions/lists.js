@@ -11,6 +11,7 @@ import {
   DELETE_LIST,
   CLEAR_LISTS,
   POST_ERROR,
+  DRAG_HAPPENED,
 } from './types';
 
 const API = process.env.REACT_APP_DEV_API_URL;
@@ -128,4 +129,31 @@ export const deleteList = (id) => (dispatch, getState) => {
       // dispatch(returnErrors(err.response.data, err.response.status))
       console.log('deleteList', err)
     );
+};
+
+export const sort = (
+  droppableIdStart,
+  droppableIdEnd,
+  droppableIndexStart,
+  droppableIndexEnd,
+  draggableId,
+  type
+) => {
+  console.log('sort droppableIdStart', droppableIdStart);
+  console.log('sort droppableIdEnd', droppableIdEnd);
+  console.log('sort droppableIndexStart', droppableIndexStart);
+  console.log('sort droppableIndexEnd', droppableIndexEnd);
+  console.log('sort draggableId', draggableId);
+  console.log('sort type', type);
+  return {
+    type: DRAG_HAPPENED,
+    payload: {
+      droppableIdStart,
+      droppableIdEnd,
+      droppableIndexStart,
+      droppableIndexEnd,
+      draggableId,
+      type,
+    },
+  };
 };

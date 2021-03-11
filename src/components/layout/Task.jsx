@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
+import { Draggable } from 'react-beautiful-dnd';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenNib } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +9,7 @@ import { faPenNib } from '@fortawesome/free-solid-svg-icons';
 import EditTaskModal from './EditTaskModal';
 
 const Task = (Tasks) => {
+  console.log('cest quoi index', Tasks.index);
   const modalRef = useRef();
   console.log('ya quoi dans Tasks', Tasks);
 
@@ -15,21 +17,37 @@ const Task = (Tasks) => {
     modalRef.current.openModal();
   };
   return (
-    <div className="dashboard__container-lists-list-card">
-      <div className="dashboard__container-lists-list-card-header">
-        <h3>{Tasks.task.name}</h3>
-        <FontAwesomeIcon
-          icon={faPenNib}
-          nature="pen"
-          onClick={openModal}
-          className="dashboard__container-lists-list-card-header-edit"
-        />
-        <EditTaskModal ref={modalRef} task={Tasks} />
-      </div>
-      <div className="dashboard__container-lists-list-card-description">
-        <p>{Tasks.task.description}</p>
-      </div>
-    </div>
+    // <Draggable draggableId={Tasks.task.id} index={index}>
+    <Draggable draggableId={String(Tasks.task.id)} index={Tasks.index}>
+      {(provided) => (
+        // <div
+        //   ref={provided.innerRef}
+        //   {...provided.draggableProps}
+        //   {...provided.dragHandleProps}
+        // >
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className="dashboard__container-lists-list-card"
+        >
+          <div className="dashboard__container-lists-list-card-header">
+            <h3>{Tasks.task.name}</h3>
+            <FontAwesomeIcon
+              icon={faPenNib}
+              nature="pen"
+              onClick={openModal}
+              className="dashboard__container-lists-list-card-header-edit"
+            />
+            <EditTaskModal ref={modalRef} task={Tasks} />
+          </div>
+          <div className="dashboard__container-lists-list-card-description">
+            <p>{Tasks.task.description}</p>
+          </div>
+        </div>
+        // </div>
+      )}
+    </Draggable>
   );
 };
 

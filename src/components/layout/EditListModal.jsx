@@ -11,7 +11,7 @@ import EditList from '../EditList';
 // import { deleteList } from '../../actions/lists';
 
 const EditListModal = forwardRef(({ listId }, ref) => {
-  console.log('pouuit', listId);
+  // console.log('pouuit', listId);
   const [display, setDisplay] = useState(false);
 
   useImperativeHandle(ref, () => {

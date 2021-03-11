@@ -8,6 +8,7 @@ import {
   DELETE_LIST_TASK,
   CLEAR_LISTS,
   POST_ERROR,
+  DRAG_HAPPENED,
 } from '../actions/types';
 
 const initialState = {
@@ -50,10 +51,6 @@ const lists = (state = initialState, action) => {
       return {
         ...state,
         lists: [...state.lists, action.payload],
-        // lists: [
-        //   ...state.lists.filter((list) => list.id !== action.payload.id),
-        //   action.payload,
-        // ],
         isLoading: false,
         errors: {},
       };
@@ -97,6 +94,62 @@ const lists = (state = initialState, action) => {
         isLoading: true,
         errors: action.payload,
       };
+    case DRAG_HAPPENED: {
+      const {
+        droppableIdStart,
+        droppableIdEnd,
+        droppableIndexStart,
+        droppableIndexEnd,
+        type,
+      } = action.payload;
+      console.log('action payload drag', action.payload);
+
+      const newState = { ...state };
+
+      // dragging lists around
+      if (type === 'list') {
+        const list = newState.lists.splice(droppableIndexStart, 1);
+        newState.lists.splice(droppableIndexEnd, 0, ...list);
+        return newState;
+      }
+
+      // // in the same list
+      // if (droppableIdStart === droppableIdEnd) {
+      //   const list = state[droppableIdStart];
+      //   const task = list.tasks.splice(droppableIndexStart, 1);
+      //   list.tasks.splice(droppableIndexEnd, 0, ...task);
+      //   return { ...state, [droppableIdStart]: list };
+      // }
+
+      // // other list
+      // if (droppableIdStart !== droppableIdEnd) {
+      //   // find the list where the drag happened
+      //   const listStart = state[droppableIdStart];
+      //   // pull out the task from this list
+      //   const task = listStart.tasks.splice(droppableIndexStart, 1);
+      //   // find the list where the drag ended
+      //   const listEnd = state[droppableIdEnd];
+
+      //   // put the card in the new list
+      //   listEnd.tasks.splice(droppableIndexEnd, 0, ...task);
+      //   return {
+      //     ...state,
+      //     [droppableIdStart]: listStart,
+      //     [droppableIdEnd]: listEnd,
+      //   };
+      // }
+      return newState;
+
+      // const newState = [...state];
+
+      // // in the same list
+      // if (droppableIdStart === droppableIdEnd) {
+      //   const newlist = state.find((list) => droppableIdStart === list.id);
+      //   const task = newlist.tasks.splice(droppableIndexStart, 1);
+      //   newlist.tasks.splice(droppableIndexEnd, 0, ...task);
+      // }
+      // return newState;
+    }
     default:
       return state;
   }

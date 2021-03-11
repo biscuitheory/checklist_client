@@ -5,6 +5,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
@@ -18,8 +19,9 @@ import AddItemButton from '../buttons/AddItemButton';
 import EditListModal from './EditListModal';
 import Task from './Task';
 
-const List = ({ auth, list, editList, getListsTasks }) => {
+const List = ({ auth, list, editList, getListsTasks, index }) => {
   // const [toDash, setToDash] = useState(false);
+  console.log('index mystere', index);
   console.log('etetetetete', list);
   const { id, name, user_id } = list;
   const modalRef = useRef();
@@ -75,50 +77,71 @@ const List = ({ auth, list, editList, getListsTasks }) => {
 
   return (
     <>
-      {/* {toDash ? <Redirect to="/dashboard" /> : null} */}
-      <div className="dashboard__container-lists-list">
-        <div className="dashboard__container-lists-list-header">
-          {toggle ? (
-            <h3 onDoubleClick={toggleInput}>{name}</h3>
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              noValidate
-              className="edit-listname-container-form"
-            >
-              <label htmlFor="name">
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={values.name || ''}
-                  onChange={handleChange}
-                  onBlur={handleSubmit}
-                  onKeyDown={onKeyDown}
-                  // onClick={() => refreshPage()}
-                />
-                {errors.name && <p className="error">{errors.name}</p>}
-              </label>
-            </form>
-          )}
-          <FontAwesomeIcon
-            icon={faEllipsisH}
-            nature="ellipse"
-            onMouseDown={openModal}
-          />
-          <EditListModal ref={modalRef} listId={id} />
-        </div>
-        {list.Tasks.map((task) => (
-          <Task key={task.id} task={task} list={list} />
-        ))}
-        {/* <AddItemButton text="task" listId={id}> */}
-        <AddItemButton text="task" listId={id} list={list}>
-          task
-        </AddItemButton>
-        {/* <AddTaskButton text="task" listId={list.id}>
-          task
-        </AddTaskButton> */}
-      </div>
+      <Draggable draggableId={String(id)} index={index}>
+        {(provided) => (
+          <div
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            className="dashboard__container-lists-list"
+          >
+            <Droppable droppableId={String(id)} type="task">
+              {(provided) => (
+                <>
+                  <div className="dashboard__container-lists-list-header">
+                    {toggle ? (
+                      <h3 onDoubleClick={toggleInput}>{name}</h3>
+                    ) : (
+                      <form
+                        onSubmit={handleSubmit}
+                        noValidate
+                        className="edit-listname-container-form"
+                      >
+                        <label htmlFor="name">
+                          <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={values.name || ''}
+                            onChange={handleChange}
+                            onBlur={handleSubmit}
+                            onKeyDown={onKeyDown}
+                            // onClick={() => refreshPage()}
+                          />
+                          {errors.name && (
+                            <p className="error">{errors.name}</p>
+                          )}
+                        </label>
+                      </form>
+                    )}
+                    <FontAwesomeIcon
+                      icon={faEllipsisH}
+                      nature="ellipse"
+                      onMouseDown={openModal}
+                    />
+                    <EditListModal ref={modalRef} listId={id} />
+                  </div>
+                  <div {...provided.droppableProps} ref={provided.innerRef}>
+                    {list.Tasks.map((task, index) => (
+                      <Task
+                        key={task.id}
+                        index={index}
+                        id={task.id}
+                        task={task}
+                        list={list}
+                      />
+                    ))}
+                    {provided.placeholder}
+                    <AddItemButton text="task" listId={id} list={list}>
+                      task
+                    </AddItemButton>
+                  </div>
+                </>
+              )}
+            </Droppable>
+          </div>
+        )}
+      </Draggable>
     </>
   );
 };
