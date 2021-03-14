@@ -13,6 +13,7 @@ export const GET_LISTSTASKS = 'GET_LISTSTASKS';
 // export const GET_LIST = 'GET_LIST';
 export const ADD_LIST = 'ADD_LIST';
 export const EDIT_LIST = 'EDIT_LIST';
+export const EDIT_MOVED_LIST = 'EDIT_MOVED_LIST';
 export const EDIT_LIST_TASK = 'EDIT_LIST_TASK';
 export const DELETE_LIST = 'DELETE_LIST';
 export const DELETE_LIST_TASK = 'DELETE_LIST_TASK';

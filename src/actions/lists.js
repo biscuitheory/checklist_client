@@ -8,6 +8,7 @@ import {
   GET_LISTSTASKS,
   ADD_LIST,
   EDIT_LIST,
+  EDIT_MOVED_LIST,
   DELETE_LIST,
   CLEAR_LISTS,
   POST_ERROR,
@@ -131,7 +132,9 @@ export const deleteList = (id) => (dispatch, getState) => {
     );
 };
 
-export const sortList = (data) => (dispatch) => {
+export const sortItems = (data, lists) => (dispatch, getState) => {
+  console.log('qeske le data', data);
+  console.log('qeske le lists', lists);
   const {
     droppableIdStart,
     droppableIdEnd,
@@ -140,6 +143,28 @@ export const sortList = (data) => (dispatch) => {
     draggableId,
     type,
   } = data;
+
+  // mettre à jour la liste qui a bougé (if type === 'list')
+  // si je veux avoir la liste qui a bougé
+  console.log('la liste qui a bougé !', lists[droppableIndexStart]);
+  const updatedList = lists[droppableIndexStart];
+
+  // if (type === 'task') {
+  //   axios
+  //     .patch(`${API}tasks`, draggableId, tokenConfig(getState))
+  //     .then((res) => {
+  //       const updatedTask = { ...list, Tasks: [...Tasks, res.data] };
+  //       dispatch({
+  //         type: EDIT_TASK,
+  //         payload: res.data,
+  //       });
+  //       dispatch({
+  //         type: EDIT_LIST,
+  //         payload: updatedTask,
+  //       });
+  //       dispatch(createMessage({ addList: 'Task Updated' }));
+  //     });
+  // }
   dispatch({
     type: DRAG_HAPPENED,
     payload: {
@@ -149,6 +174,11 @@ export const sortList = (data) => (dispatch) => {
       droppableIndexEnd,
       draggableId,
       type,
+      updatedList,
     },
   });
+  // dispatch({
+  //   type: EDIT_MOVED_LIST,
+  //   payload: { draggableId, updatedList },
+  // });
 };

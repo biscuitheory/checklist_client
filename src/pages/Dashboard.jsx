@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import { getLists, getListsTasks, sortList } from '../actions/lists';
+import { getLists, getListsTasks, sortItems } from '../actions/lists';
 import { getTasks } from '../actions/tasks';
 
 // import useForm from '../components/customedhooks/useForm';
@@ -18,7 +18,7 @@ import AddItemButton from '../components/buttons/AddItemButton';
 const Dashboard = ({
   getLists,
   getListsTasks,
-  sortList,
+  sortItems,
   getTasks,
   auth,
   onlyLists,
@@ -27,10 +27,12 @@ const Dashboard = ({
 }) => {
   // console.log('authenticated user', auth.user.id);
   // console.log('tasks from dashboard', tasks);
-  // console.log('lists from dashboard', lists);
+  // console.log('lists from dashboard', lists[0]);
 
   async function onDragEnd(result) {
     const { destination, source, draggableId, type } = result;
+
+    console.log('ledraggableId', draggableId);
 
     console.log('result jean pierre', result);
 
@@ -51,15 +53,20 @@ const Dashboard = ({
     const droppableIndexStart = source.index;
     const droppableIndexEnd = destination.index;
     // console.log('droppableIdEnd', droppableIdEnd);
+
+    console.log('ptit test currentList', lists[droppableIndexStart]);
     // move list
-    sortList({
-      droppableIdStart,
-      droppableIdEnd,
-      droppableIndexStart,
-      droppableIndexEnd,
-      draggableId,
-      type,
-    });
+    sortItems(
+      {
+        droppableIdStart,
+        droppableIdEnd,
+        droppableIndexStart,
+        droppableIndexEnd,
+        draggableId,
+        type,
+      },
+      lists
+    );
 
     // sort(
     //   source.droppableId,
@@ -212,7 +219,7 @@ const Dashboard = ({
 //   );
 // };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, droppableIdStart) => ({
   auth: state.auth,
   // tasks: state.tasks.tasks,
   lists: state.lists.lists,
@@ -223,5 +230,5 @@ export default connect(mapStateToProps, {
   getLists,
   getListsTasks,
   getTasks,
-  sortList,
+  sortItems,
 })(Dashboard);
