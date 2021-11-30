@@ -1,4 +1,5 @@
 /* eslint-disable no-shadow */
+/* eslint-disable camelcase */
 /* eslint-disable no-constant-condition */
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
@@ -55,6 +56,30 @@ const Dashboard = ({
     // console.log('droppableIdEnd', droppableIdEnd);
 
     console.log('ptit test currentList', lists[droppableIndexStart]);
+
+    // const currentList = lists[droppableIndexStart];
+
+    // const {
+    //   user_id,
+    //   id,
+    //   name,
+    //   rank,
+    //   Tasks,
+    //   createdAt,
+    //   updatedAt,
+    // } = currentList;
+
+    // const updatedList = {
+    //   user_id,
+    //   list_id: id,
+    //   name,
+    //   rank: droppableIndexEnd,
+    //   Tasks,
+    //   createdAt,
+    //   updatedAt,
+    // };
+
+    // console.log('test', updatedList.rank);
     // move list
     sortItems(
       {
@@ -65,6 +90,7 @@ const Dashboard = ({
         draggableId,
         type,
       },
+      // updatedList,
       lists
     );
 
@@ -101,9 +127,11 @@ const Dashboard = ({
                   ref={provided.innerRef}
                   className="dashboard__container-lists"
                 >
-                  {lists.map((list, index) => (
-                    <List key={list.id} list={list} index={index} />
-                  ))}
+                  {lists
+                    // .sort((a, b) => (a.rank > b.rank ? 1 : -1))
+                    .map((list, index) => (
+                      <List key={list.id} list={list} index={index} />
+                    ))}
                   {provided.placeholder}
                   <div className="dashboard__container-lists-addlist-inside">
                     <AddItemButton text="list">list</AddItemButton>

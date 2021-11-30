@@ -8,6 +8,7 @@ import {
   GET_LISTSTASKS,
   ADD_LIST,
   EDIT_LIST,
+  EDIT_LIST_TASK,
   EDIT_MOVED_LIST,
   DELETE_LIST,
   CLEAR_LISTS,
@@ -53,7 +54,7 @@ export const getListsTasks = (userId) => async (dispatch, getState) => {
 
 // ADD LIST
 export const addList = (list) => async (dispatch, getState) => {
-  // console.log('data from addlist form', list);
+  console.log('data from addlist form', list);
 
   // const { user_id, name, Tasks } = list;
 
@@ -132,9 +133,10 @@ export const deleteList = (id) => (dispatch, getState) => {
     );
 };
 
-export const sortItems = (data, lists) => (dispatch, getState) => {
+export const sortItems = (data, list, lists) => (dispatch, getState) => {
   console.log('qeske le data', data);
-  console.log('qeske le lists', lists);
+  console.log('qeske le list', list);
+  console.log('qeske les lists', lists);
   const {
     droppableIdStart,
     droppableIdEnd,
@@ -144,10 +146,34 @@ export const sortItems = (data, lists) => (dispatch, getState) => {
     type,
   } = data;
 
-  // mettre à jour la liste qui a bougé (if type === 'list')
-  // si je veux avoir la liste qui a bougé
-  console.log('la liste qui a bougé !', lists[droppableIndexStart]);
-  const updatedList = lists[droppableIndexStart];
+  // const test = lists.splice(droppableIndexStart, 1);
+  // // lists.splice(droppableIndexEnd, 0, ...test);
+
+  // const rere = [...lists, test.lists.splice(droppableIndexEnd, 0, ...list)];
+
+  // console.log('wakanda', rere);
+
+  const { Tasks } = list;
+
+  const body = JSON.stringify(list);
+  console.log('data list from sortItems', body);
+
+  // axios
+  //   .patch(`${API}lists`, body, tokenConfig(getState))
+  //   .then((res) => {
+  //     console.log('res data sortList', res.data);
+  //     const editedList = { ...res.data, Tasks };
+  //     console.log('editedList', editedList);
+  //     dispatch(createMessage({ editList: 'List Updated' }));
+  //     // dispatch({
+  //     //   type: EDIT_LIST_TASK,
+  //     //   payload: editedList,
+  //     // });
+  //   })
+  //   .catch((err) =>
+  //     // dispatch(returnErrors(err.response.data, err.response.status))
+  //     console.log('editList', err)
+  //   );
 
   // if (type === 'task') {
   //   axios
@@ -165,6 +191,21 @@ export const sortItems = (data, lists) => (dispatch, getState) => {
   //       dispatch(createMessage({ addList: 'Task Updated' }));
   //     });
   // }
+  // dispatch({
+  //   type: DRAG_HAPPENED,
+  //   payload: {
+  //     droppableIdStart,
+  //     droppableIdEnd,
+  //     droppableIndexStart,
+  //     droppableIndexEnd,
+  //     draggableId,
+  //     type,
+  //   },
+  // });
+  // dispatch({
+  //   type: EDIT_MOVED_LIST,
+  //   payload: { draggableId, updatedList },
+  // });
   dispatch({
     type: DRAG_HAPPENED,
     payload: {
@@ -174,11 +215,6 @@ export const sortItems = (data, lists) => (dispatch, getState) => {
       droppableIndexEnd,
       draggableId,
       type,
-      updatedList,
     },
   });
-  // dispatch({
-  //   type: EDIT_MOVED_LIST,
-  //   payload: { draggableId, updatedList },
-  // });
 };

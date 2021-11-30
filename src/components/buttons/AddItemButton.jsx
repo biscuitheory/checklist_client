@@ -67,7 +67,7 @@ const AddItemButton = ({
   async function submit() {
     {
       (text === 'list'
-        ? addList({ user_id: auth.user.id, name: values.name })
+        ? addList({ user_id: auth.user.id, name: values.name, rank: 100 })
         : addTask(
             {
               user_id: auth.user.id,
@@ -75,6 +75,7 @@ const AddItemButton = ({
               description: 'Description à compléter',
               priority_id: 3,
               list_id: listId,
+              rank: 100,
             },
             list
           )

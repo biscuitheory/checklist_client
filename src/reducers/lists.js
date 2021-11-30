@@ -1,4 +1,5 @@
 /* eslint-disable no-shadow */
+// import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 import {
   GET_LISTS,
   GET_LISTSTASKS,
@@ -117,8 +118,10 @@ const lists = (state = initialState, action) => {
         droppableIndexEnd,
         draggableId,
         type,
-        updatedList,
+        // editedList,
       } = action.payload;
+
+      // const newState = { ...state };
 
       // dragging lists around
       if (type === 'list') {
@@ -131,6 +134,17 @@ const lists = (state = initialState, action) => {
           isLoading: false,
           errors: {},
         };
+        // const list = newState.lists.splice(droppableIndexStart, 1);
+        // newState.lists.splice(droppableIndexEnd, 0, ...list);
+
+        // console.log('wakanda', state.lists);
+        // return newState;
+        // return {
+        //   ...state,
+        //   // lists: [...state.lists],
+        //   isLoading: false,
+        //   errors: {},
+        // };
       }
 
       // same list
@@ -167,6 +181,8 @@ const lists = (state = initialState, action) => {
         // put the card in the new list
         listEnd.Tasks.splice(droppableIndexEnd, 0, ...task);
       }
+
+      // return newState;
 
       return {
         ...state,

@@ -119,6 +119,6 @@ export const tokenConfig = (getState) => {
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`;
   }
-  console.log('configuuu', config);
+  // console.log('configuuu', config);
   return config;
 };
