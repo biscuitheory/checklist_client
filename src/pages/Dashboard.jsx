@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-constant-condition */
 /* eslint-disable react/no-array-index-key */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
@@ -33,9 +33,9 @@ const Dashboard = ({
   async function onDragEnd(result) {
     const { destination, source, draggableId, type } = result;
 
-    console.log('ledraggableId', draggableId);
+    // console.log('ledraggableId', draggableId);
 
-    console.log('result jean pierre', result);
+    // console.log('result jean pierre', result);
 
     if (!destination) {
       console.log('not dropped in droppable');
